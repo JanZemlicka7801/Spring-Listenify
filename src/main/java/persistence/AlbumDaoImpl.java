@@ -12,8 +12,8 @@ import java.util.List;
 
 public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
 
-    public AlbumDaoImpl(){
-        super();
+    public AlbumDaoImpl(Connection conn){
+        super(conn);
     }
 
     public AlbumDaoImpl(String dbName){
@@ -61,12 +61,7 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Albums album = new Albums();
-                    album.setAlbum_id(rs.getInt("album_id"));
-                    album.setArtist_id(rs.getInt("artist_id"));
-                    album.setAlbum_title(rs.getString("album_title"));
-                    album.setRelease_year(rs.getInt("release_year"));
-                    albumsList.add(album);
+                    albumsList.add(mapRow(rs));
                 }
             } catch (SQLException e) {
                 System.out.println(LocalDateTime.now() + ": SQLException occurred while executing the query or processing the result set.");
@@ -112,6 +107,22 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
         }
 
         return albumId;
+    }
+
+    /**
+     * Maps a ResultSet row to an Albums object.
+     *
+     * @param rs The ResultSet to map.
+     * @return A mapped Albums object.
+     * @throws SQLException If mapping fails.
+     */
+    private Albums mapRow(ResultSet rs) throws SQLException {
+        return Albums.builder()
+                .album_id(rs.getInt("album_id"))
+                .artist_id(rs.getInt("artist_id"))
+                .album_title(rs.getString("album_title"))
+                .release_year(rs.getInt("release_year"))
+                .build();
     }
 
     public static void main(String[] args) {

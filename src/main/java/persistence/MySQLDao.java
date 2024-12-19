@@ -11,6 +11,7 @@ import java.util.Properties;
 public class MySQLDao {
     private Properties properties = new Properties();
     private String databaseName = "listenify";
+    private Connection conn;
 
     public MySQLDao() {
     }
@@ -27,39 +28,49 @@ public class MySQLDao {
         }
     }
 
+    public MySQLDao(Connection conn){
+        this.conn = conn;
+    }
+
     /**
      * Creates connection with database using the database.properties file as param
      *
      * @return A Connection object if successful, null otherwise.
      */
     public Connection getConnection() {
-        if (properties.isEmpty()) {
-            System.out.println("Properties not loaded. Cannot establish database connection.");
-            return null;
-        }
 
-        // Retrieve database connection properties
-        String driver = properties.getProperty("driver");
-        String url = properties.getProperty("url");
-        String database = properties.getProperty("database", databaseName);
-        String username = properties.getProperty("username");
-        String password = properties.getProperty("password", "");
-
-        try {
-            Class.forName(driver);
-
-            try {
-                // Create and return a connection to the database
-                Connection con = DriverManager.getConnection(url + database, username, password);
-                return con;
-            } catch (SQLException e) {
-                System.out.println(LocalDateTime.now() + ": SQLException trying to connect to " + url + database);
-                System.out.println(e.getMessage());
+        try{
+            if (properties == null) {
+                throw new IllegalStateException("Database properties are not initialized. Ensure the DAO is properly constructed.");
             }
-        } catch (ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException while trying to load MySQL driver");
-            System.out.println("Error: " + e.getMessage());
+
+            if (conn == null || conn.isClosed()) {
+                // Retrieve database connection properties
+                String driver = properties.getProperty("driver");
+                String url = properties.getProperty("url");
+                String database = properties.getProperty("database", databaseName);
+                String username = properties.getProperty("username");
+                String password = properties.getProperty("password", "");
+
+                Class.forName(driver);
+
+                conn = DriverManager.getConnection(url + database, username, password);
+            }
+        } catch (Exception e) {
+            System.err.println("Error getting connection: " + e.getMessage());
+            e.printStackTrace();
         }
-        return null;
+        return conn;
+    }
+
+    public void freeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.err.println(LocalDateTime.now() + ": Failed to close database connection: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

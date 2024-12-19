@@ -1,7 +1,7 @@
 package persistence;
 
 import business.User;
-import functions.PasswordHash;
+import config.PasswordHash;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
