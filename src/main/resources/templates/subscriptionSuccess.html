@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscription Renewed</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Subscription Renewed!</h4>
+        <p th:text="${message}">Your subscription has been renewed successfully.</p>
+        <hr>
+        <p class="mb-0">
+            <a href="/profile" class="btn btn-primary">Back to Profile</a>
+            <a href="/" class="btn btn-secondary">Home</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
