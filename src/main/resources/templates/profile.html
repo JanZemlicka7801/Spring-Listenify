@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>User Profile</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${user.username}">Username</h5>
+            <p class="card-text">Email: <span th:text="${user.email}">email@example.com</span></p>
+            <p class="card-text">Member since: <span th:text="${#temporals.format(user.registrationDate, 'dd-MM-yyyy')}">01-01-2024</span></p>
+
+            <h6 class="mt-4">Subscription Status</h6>
+            <div class="mb-3">
+                <a href="/renewSubscription" class="btn btn-primary">Renew Subscription</a>
+            </div>
+
+            <div class="mt-4">
+                <a href="/logout" class="btn btn-danger">Logout</a>
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
