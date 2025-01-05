@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Artists - Listenify</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Artists</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="artist : ${artists}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span th:if="${artist.artistFirstName}" th:text="${artist.artistFirstName + ' '}"></span>
+                        <span th:text="${artist.artistLastName}"></span>
+                    </h5>
+                    <p class="card-text" th:text="${artist.description}">Artist description</p>
+                    <p class="card-text">
+                        <span th:text="${artist.band == 1 ? 'Band' : 'Solo Artist'}">Artist Type:</span>
+                    </p>
+                    <a th:href="@{/artists/{id}(id=${artist.artistId})}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
