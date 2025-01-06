@@ -11,8 +11,7 @@
 <div class="container mt-5">
   <h2 class="mb-4">Albums</h2>
 
-  <!-- Search Form -->
-  <form action="/searchAlbum" method="get" class="mb-4">
+  <form th:action="@{/albums/search}" method="get" class="mb-4">
     <div class="row">
       <div class="col-md-10">
         <input type="text" class="form-control" name="albumTitle" placeholder="Search Songs by Album Title" required>
@@ -23,7 +22,6 @@
     </div>
   </form>
 
-  <!-- Albums List -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" th:each="album : ${albums}">
       <div class="card h-100">
@@ -35,7 +33,6 @@
           <p class="card-text">
             Release Year: <span th:text="${album.release_year}">2024</span>
           </p>
-          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary">View Songs</a>
         </div>
       </div>
     </div>
