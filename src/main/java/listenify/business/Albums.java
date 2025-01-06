@@ -15,6 +15,7 @@ public class Albums {
     private int artist_id;
     private String album_title;
     private int release_year;
+    private String artistName;
 
     public Albums(int artist_id, String album_title, int release_year) {
         this.album_id = 0;
