@@ -9,6 +9,14 @@
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
+    <!-- Search Form -->
+    <form action="/searchArtists" method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="artistName" class="form-control" placeholder="Search for an artist..." required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
     <h2 class="mb-4">Artists</h2>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
