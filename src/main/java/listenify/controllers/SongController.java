@@ -18,9 +18,9 @@ public class SongController {
     @GetMapping("/viewSongs")
     public String viewSongs(Model model) {
         SongDao songDao = new SongDaoImpl("database.properties");
-        List<Song> songs = songDao.getAllSongsByAlbumId(1); // Example for albumId = 1, adjust as needed.
+        List<Song> songs = songDao.getAllSongs();
         model.addAttribute("songs", songs);
-        return "songList";
+        return "songs";
     }
 
     @GetMapping("/getSong")
