@@ -1,0 +1,62 @@
+[33m652457b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Created a internationalization for the project.
+[33ma1892bd[m Created a internationalization for the project.
+[33ma40f504[m Created a internationalization for the project.
+[33m1e6914e[m Initial update.
+[33m922b093[m Merge remote-tracking branch 'origin/master'
+[33m33c2887[m Initial update.
+[33mc87e2d1[m Added new fields to User class for subscription start and end. Implemented Renew Subscription and Subscription expired
+[33m68bc3e8[m Added new fields to User class for subscription start and end. Implemented Renew Subscription and Subscription expired
+[33m1224c6a[m renew subscription functionality added to profile
+[33m6aba3f8[m Table altered to implement subscription functionality, renew subscription functionality added to profile
+[33ma030b4b[m Added a function to rate a song, which will be displayed in the profile section/page.
+[33m5392d95[m Initial commit.
+[33mc500fb2[m Initial commit.
+[33m85474a6[m Added a list of rated songs by user inside profile page.
+[33m7678e4c[m Merge remote-tracking branch 'origin/master'
+[33m00b76ab[m Added a display of the top-rated song in the main page.
+[33m3d85661[m Merge remote-tracking branch 'origin/master'
+[33m87c974a[m Added seach bar to artist.html and created artistList.html to display results
+[33mbde08e5[m edited ArtistController to add searchArtists
+[33mb17f4a3[m Edited artistDao/Impl to add search function
+[33mf279317[m Merge remote-tracking branch 'origin/master'
+[33med49c7a[m implemented edit profiles methods. Created and Implemented updateUser and updatePassword method so password changing is possible.
+[33ma1e0c34[m Merge remote-tracking branch 'origin/master'
+[33m76a5ebf[m Created and Implemented Create Password template. Created and Implemented edit profile template. Changed profile.html to allow users to change profile details.
+[33m3249bdd[m Added a display of the most popular song in the main page.
+[33m8d9843e[m Edited viewSongs for cleaner code
+[33m8fc6a25[m Deleted the searchSong.html page and added the search bar to the song.html page for better user experance
+[33m31e7796[m Added a bootstrap for the page and a menu bar for redirecting.
+[33m5baf427[m Accidently broke Omars code refactored to fix it
+[33m99b39f0[m Merge remote-tracking branch 'origin/master'
+[33m9de25ce[m Fix error were after a search the song would be blank need to go back and add styling
+[33mf1cac15[m Implemented Songs page
+[33m7732057[m Implemented getAllSongs Method
+[33m82b6e44[m Changed /viewSongs method to get all songs using a new method i implemented rather than finding songs by id; that will be needed later. Implemented getAllSongs Method
+[33ma005e69[m Fixed incorrect mapping to albums/artists/songs through index controller. Changed Menu.html to properly link to songs page
+[33mb234bb2[m Implemented AlbumController with new get all albums method
+[33mb920120[m Implemented Albums Page
+[33m4cc9644[m Added new artistName String in order to get name of artist get all artists method
+[33mc5217e6[m Created new method in AlbumsDao to get all albums
+[33mf9c5b05[m Fixxed Mapping issue between the song controller and searchSongs.html
+[33m7b56ece[m Created songList.html and edited menu
+[33m559f03a[m Created searchSongs
+[33m973df67[m Created song controller
+[33m1084c2d[m Edited SongDao to add search function
+[33me6616fa[m Added a navbar inside each of the page viewing for better navigation.
+[33ma9bf060[m Configured the connection to the database for necessary information and refactor the routing within the app.
+[33mdcffd6c[m implemented HomeController.java and ArtistController.java also changed error page to look nicer
+[33mac0db59[m implemented HomeController.java
+[33mc9d45d4[m Added Fragment package to hold menu/navbar, implemented navbar. Changed error.html to match site layout better, changed index.html to match spec requirements better.
+[33mee1b9bc[m Add user registration with form validation
+[33mdd5c5a4[m Created and Implemented login.html template
+[33m5751473[m Created and Implemented subscriptionSuccess.html template
+[33m4986718[m Created and Implemented profile.html template
+[33ma10a5d7[m Created and Implemented loginFailed.html template with a message notifying user of failed login with push to try again or register
+[33m56654e5[m Created and Implemented registerFailed.html template with a message notifying user of failed registration with push to try again
+[33m8017b8b[m Created and Implemented registerSuccess.html template with a message notifying user of successful registration with push to login
+[33m9276aff[m Created UserController, Implement with registration, login, logout and subscription features
+[33mce938b6[m Configured MySQL database to store and retrieve the data.
+[33m7bee9eb[m Created a landing page with a navbar for navigation.
+[33m560d581[m Added necessary plugins and classes for the app to be able to run.
+[33m278a765[m Added necessary plugins and classes for the app to be able to run.
+[33ma9b2f3f[m Created a spring boot project for Listenify.
