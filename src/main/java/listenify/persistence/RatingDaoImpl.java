@@ -103,7 +103,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
 
                 if (rs.next()) {
                     return "Top-Rated Song: " + rs.getString("song_title")
-                            + ", Average Rating: " + rs.getDouble("avg_rating");
+                            + ", Rating: " + rs.getDouble("avg_rating");
                 }
             }
         } catch (SQLException e) {
