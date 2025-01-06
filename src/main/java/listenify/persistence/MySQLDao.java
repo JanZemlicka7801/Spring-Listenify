@@ -15,6 +15,11 @@ public class MySQLDao {
     public MySQLDao() {
     }
 
+    /**
+     * Constructor that loads properties from a file.
+     *
+     * @param propFilename the name of the properties file to load
+     */
     public MySQLDao(String propFilename) {
         try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(propFilename)) {
             if (input == null) {
@@ -67,6 +72,11 @@ public class MySQLDao {
         return conn;
     }
 
+    /**
+     * Closes the connection to the database.
+     *
+     * @param conn the connection to close
+     */
     public void freeConnection(Connection conn) {
         if (conn != null) {
             try {

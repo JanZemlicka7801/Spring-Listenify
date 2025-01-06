@@ -26,8 +26,8 @@ public class PlaylistController {
     /**
      * Displays the list of playlists for the logged-in user and public playlists.
      *
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying playlists or redirects to the login page if the user is not logged in.
      */
     @GetMapping
@@ -57,7 +57,7 @@ public class PlaylistController {
     /**
      * Displays the form to create a new playlist.
      *
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for creating playlists or redirects to the login page if the user is not logged in.
      */
     @GetMapping("/create")
@@ -73,8 +73,8 @@ public class PlaylistController {
      *
      * @param playlistName the name of the new playlist.
      * @param isPublic     whether the playlist is public or private.
-     * @param model        the {@link Model} object used to pass data to the view.
-     * @param session      the {@link HttpSession} to check for logged-in user information.
+     * @param model        the Model object used to pass data to the view.
+     * @param session      the HttpSession to check for logged-in user information.
      * @return redirects to the playlist list page if successful or an error page otherwise.
      */
     @PostMapping("/create")
@@ -115,8 +115,8 @@ public class PlaylistController {
      * Displays the details of a specific playlist.
      *
      * @param playlistId the ID of the playlist to view.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for viewing playlist details or an error page if access is denied.
      */
     @GetMapping("/{playlistId}")
@@ -174,8 +174,8 @@ public class PlaylistController {
      *
      * @param playlistId the ID of the playlist to which the song will be added.
      * @param songId     the ID of the song to add.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
      */
     @PostMapping("/{playlistId}/addSong")
@@ -217,8 +217,8 @@ public class PlaylistController {
      *
      * @param playlistId the ID of the playlist from which the song will be removed.
      * @param songId     the ID of the song to remove.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
      */
     @PostMapping("/{playlistId}/removeSong")
@@ -260,8 +260,8 @@ public class PlaylistController {
      *
      * @param playlistId the ID of the playlist to rename.
      * @param newName    the new name for the playlist.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
      */
     @PostMapping("/{playlistId}/rename")

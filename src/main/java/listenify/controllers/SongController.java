@@ -29,8 +29,8 @@ public class SongController {
      * Displays all songs or filters songs by title if a search query is provided.
      *
      * @param title   the title of the song to search for (optional).
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying songs or redirects to the login page if the user is not logged in.
      */
     @GetMapping("/viewSongs")
@@ -70,8 +70,8 @@ public class SongController {
      * Fetches details for a specific song by title.
      *
      * @param title   the title of the song to fetch.
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying the song details, or an error template if the song is not found or the user is not logged in.
      */
     @GetMapping("/getSong")
@@ -112,8 +112,8 @@ public class SongController {
      * Searches for songs by title.
      *
      * @param songName the title of the song to search for.
-     * @param model    the {@link Model} object used to pass data to the view.
-     * @param session  the {@link HttpSession} to check for logged-in user information.
+     * @param model    the Model object used to pass data to the view.
+     * @param session  the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying the search results, or an error template if an exception occurs.
      */
     @GetMapping("/searchSongs")

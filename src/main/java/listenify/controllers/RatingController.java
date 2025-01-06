@@ -21,7 +21,7 @@ public class RatingController {
     private final RatingDaoImpl ratingDao;
 
     /**
-     * Initializes the RatingController with a {@link RatingDaoImpl} instance.
+     * Initializes the RatingController with a RatingDaoImpl instance.
      */
     public RatingController() {
         this.ratingDao = new RatingDaoImpl("database.properties");
@@ -30,7 +30,7 @@ public class RatingController {
     /**
      * Displays the home page with the most popular and top-rated songs.
      *
-     * @param model the {@link Model} object used to pass data to the view.
+     * @param model the Model object used to pass data to the view.
      * @return the name of the Thymeleaf template for the home page.
      */
     @GetMapping("/")
@@ -55,8 +55,8 @@ public class RatingController {
     /**
      * Displays the user's profile page, including their rated songs.
      *
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} object to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession object to check for logged-in user information.
      * @return the name of the Thymeleaf template for the profile page or redirects to the login page if the user is not logged in.
      * @throws SQLException if an error occurs while retrieving rated songs.
      */
@@ -78,8 +78,8 @@ public class RatingController {
      *
      * @param songId  the ID of the song being rated.
      * @param rating  the rating provided by the user (e.g., 1 to 5 stars).
-     * @param session the {@link HttpSession} object to check for logged-in user information.
-     * @param model   the {@link Model} object used to pass messages to the view.
+     * @param session the HttpSession object to check for logged-in user information.
+     * @param model   the Model object used to pass messages to the view.
      * @return redirects to the song list page after rating or to the login page if the user is not logged in.
      */
     @PostMapping("/rateSong")

@@ -284,6 +284,13 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
         }
     }
 
+    /**
+     * Gets a playlist by its ID.
+     *
+     * @param playlistId ID of playlist
+     * @return Playlist if found, null if not found
+     * @throws SQLException if database error occurs
+     */
     @Override
     public Playlist getPlaylistById(int playlistId) throws SQLException {
         Connection conn = null;

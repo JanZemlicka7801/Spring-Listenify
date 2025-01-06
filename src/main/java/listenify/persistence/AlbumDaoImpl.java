@@ -125,6 +125,11 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
                 .build();
     }
 
+    /**
+     * Retrieves a list of all albums in the database.
+     *
+     * @return A list of all albums in the database.
+     */
     @Override
     public List<Albums> getAllAlbums() {
         List<Albums> albumsList = new ArrayList<>();

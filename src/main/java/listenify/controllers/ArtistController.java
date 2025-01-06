@@ -35,8 +35,8 @@ public class ArtistController {
     /**
      * Handles the request to view all artists.
      *
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying artists or redirects to the login page if the user is not logged in.
      */
     @GetMapping("/viewArtists")
@@ -59,8 +59,8 @@ public class ArtistController {
      * Handles the request to search for artists by name.
      *
      * @param artistName the name of the artist to search for.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying the search results or redirects to the login page if the user is not logged in.
      */
     @GetMapping("/searchArtists")
@@ -84,8 +84,8 @@ public class ArtistController {
      *
      * @param artistFirstName the first name of the artist (optional).
      * @param artistLastName  the last name of the artist (required).
-     * @param model           the {@link Model} object used to pass data to the view.
-     * @param session         the {@link HttpSession} to check for logged-in user information.
+     * @param model           the Model object used to pass data to the view.
+     * @param session         the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying the artist's songs or redirects to the login page if the user is not logged in.
      */
     @GetMapping("/searchArtistSongs")

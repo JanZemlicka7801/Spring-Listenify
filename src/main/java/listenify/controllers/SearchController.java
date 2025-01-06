@@ -41,8 +41,8 @@ public class SearchController {
      * @param query   the search query provided by the user.
      * @param type    the type of search to perform (e.g., "song", "artist", "album", or "all").
      *                Defaults to "all" if not specified.
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the name of the Thymeleaf template for displaying search results,
      *         or redirects to the login page if the user is not logged in.
      */
@@ -62,15 +62,12 @@ public class SearchController {
 
         switch (type.toLowerCase()) {
             case "song":
-                // Search for songs by title
                 songs = songDao.searchSongsByTitle(query);
                 break;
             case "artist":
-                // Search for artists by name
                 artists = artistDao.searchArtistsByName(query);
                 break;
             case "album":
-                // Search for albums by artist name
                 String[] queryParts = query.split("\\s+");
                 if (queryParts.length > 1) {
                     String firstName = queryParts[0];
@@ -83,7 +80,6 @@ public class SearchController {
                 break;
             case "all":
             default:
-                // Perform a general search across songs, artists, and albums
                 songs = songDao.searchSongsByTitle(query);
                 artists = artistDao.searchArtistsByName(query);
                 albums = albumDao.getAlbumsByArtistName(null, query);
@@ -92,7 +88,6 @@ public class SearchController {
                 break;
         }
 
-        // Add search results to the model
         model.addAttribute("songs", songs);
         model.addAttribute("artists", artists);
         model.addAttribute("albums", albums);

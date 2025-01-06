@@ -166,6 +166,13 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    /**
+     * Searches for songs by title keyword.
+     *
+     * @param keyword the keyword to search for in song titles
+     * @return a list of songs with titles containing the keyword
+     * @auther Seb Mathews-Lynch
+     */
     @Override
     public List<Song> searchSongsByTitle(String keyword) {
         List<Song> songs = new ArrayList<>();
@@ -184,6 +191,13 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    /**
+     * Retrieves a list of songs by a specified artist name.
+     *
+     * @param artistName the name of the artist to search for
+     * @return a list of songs by the specified artist
+     * @auther Seb Mathews-Lynch
+     */
     @Override
     public List<Song> getSongsByArtistName(String artistName) {
         List<Song> songs = new ArrayList<>();
@@ -250,6 +264,11 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    /**
+     * Retrieves a list of all songs in the database.
+     *
+     * @return A list of all songs in the database.
+     */
     @Override
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
@@ -277,6 +296,13 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    /**
+     * Maps a ResultSet row to a Song object.
+     *
+     * @param rs The ResultSet to map.
+     * @return A mapped Song object.
+     * @throws SQLException If mapping fails.
+     */
     private Song mapRow(ResultSet rs) throws SQLException {
         return Song.builder()
                 .songId(rs.getInt("song_id"))
@@ -284,12 +310,5 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
                 .songTitle(rs.getString("song_title"))
                 .duration(rs.getTime("duration"))
                 .build();
-    }
-    public static void main(String[] args) {
-        SongDaoImpl s = new SongDaoImpl("database.properties");
-        System.out.println(s.getAllSongsByAlbumId(1));
-
-        List<Song> searchResults = s.searchSongsByTitle("Love");
-        searchResults.forEach(System.out::println);
     }
 }

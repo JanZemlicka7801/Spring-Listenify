@@ -30,7 +30,7 @@ public class UserController {
      * @param password   the password entered by the user.
      * @param email      the email address entered by the user.
      * @param creditCard the credit card number provided by the user.
-     * @param model      the {@link Model} object used to pass data to the view.
+     * @param model      the Model object used to pass data to the view.
      * @return the name of the success or error view based on the operation result.
      */
     @PostMapping("/register")
@@ -79,8 +79,8 @@ public class UserController {
      *
      * @param username the username entered by the user.
      * @param password the password entered by the user.
-     * @param model    the {@link Model} object used to pass data to the view.
-     * @param session  the {@link HttpSession} to store the logged-in user's information.
+     * @param model    the Model object used to pass data to the view.
+     * @param session  the HttpSession to store the logged-in user's information.
      * @return the home page on successful login or an error view if login fails.
      */
     @PostMapping("/login")
@@ -119,8 +119,8 @@ public class UserController {
     /**
      * Logs out the currently logged-in user.
      *
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to invalidate the user's session.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to invalidate the user's session.
      * @return redirects to the home page after logout.
      */
     @GetMapping("/logout")
@@ -137,8 +137,8 @@ public class UserController {
      * Renews the user's subscription.
      *
      * @param creditCard the credit card number provided by the user.
-     * @param model      the {@link Model} object used to pass data to the view.
-     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @param model      the Model object used to pass data to the view.
+     * @param session    the HttpSession to check for logged-in user information.
      * @return a success view if the subscription is renewed or an error view otherwise.
      */
     @PostMapping("/renewSubscription")
@@ -184,8 +184,8 @@ public class UserController {
     /**
      * Displays the form for editing the user's profile.
      *
-     * @param model   the {@link Model} object used to pass data to the view.
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param model   the Model object used to pass data to the view.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the profile edit page or a redirect to the login page if the user is not logged in.
      */
     @GetMapping("/profile/edit")
@@ -203,8 +203,8 @@ public class UserController {
      *
      * @param username the updated username.
      * @param email    the updated email address.
-     * @param session  the {@link HttpSession} to retrieve the logged-in user's information.
-     * @param model    the {@link Model} object used to pass data to the view.
+     * @param session  the HttpSession to retrieve the logged-in user's information.
+     * @param model    the Model} object used to pass data to the view.
      * @return the profile page if successful or an error view otherwise.
      */
     @PostMapping("/profile/edit")
@@ -256,7 +256,7 @@ public class UserController {
     /**
      * Displays the form for changing the user's password.
      *
-     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @param session the HttpSession to check for logged-in user information.
      * @return the change password page or a redirect to the login page if the user is not logged in.
      */
     @GetMapping("/profile/change-password")
@@ -273,8 +273,8 @@ public class UserController {
      *
      * @param currentPassword the user's current password.
      * @param newPassword     the new password to set.
-     * @param session         the {@link HttpSession} to check for logged-in user information.
-     * @param model           the {@link Model} object used to pass messages to the view.
+     * @param session         the HttpSession to check for logged-in user information.
+     * @param model           the Model object used to pass messages to the view.
      * @return the profile page if successful or an error view otherwise.
      */
     @PostMapping("/profile/change-password")

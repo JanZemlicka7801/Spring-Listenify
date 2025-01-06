@@ -83,6 +83,13 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         return artists;
     }
 
+    /**
+     * Maps a row from the database to an Artist object.
+     *
+     * @param rs the ResultSet containing the row data
+     * @return an Artist object
+     * @throws SQLException if a database access error occurs
+     */
     private Artist mapRow(ResultSet rs) throws SQLException {
         return Artist.builder()
                 .artistId(rs.getInt("artist_id"))

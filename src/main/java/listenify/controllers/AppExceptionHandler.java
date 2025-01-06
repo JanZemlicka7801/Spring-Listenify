@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class AppExceptionHandler {
 
     /**
-     * Handles {@link NullPointerException} exceptions specifically.
+     * Handles NullPointerException exceptions specifically.
      *
-     * @param model the {@link Model} object used to pass error details to the view.
+     * @param model the model object used to pass error details to the view.
      * @return the name of the error view template to display.
      */
     @ExceptionHandler(value = NullPointerException.class)
@@ -25,7 +25,7 @@ public class AppExceptionHandler {
     /**
      * Handles all other exceptions that are not explicitly caught by more specific handlers.
      *
-     * @param model the {@link Model} object used to pass error details to the view.
+     * @param model the Model object used to pass error details to the view.
      * @param ex    the exception object that was thrown.
      * @return the name of the error view template to display.
      */

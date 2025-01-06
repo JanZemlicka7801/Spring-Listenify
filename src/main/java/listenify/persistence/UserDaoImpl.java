@@ -8,7 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
-//done by Omer
 public class UserDaoImpl extends MySQLDao implements UserDao {
 
     /**
@@ -26,6 +25,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
     public UserDaoImpl() {
         super();
     }
+
 
     @Override
     public List<User> getAllUsers() throws SQLException {
@@ -158,6 +158,14 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
     }
 
+    /**
+     * Updates the user's information in the database.
+     *
+     * @param user the User object containing the updated information (username, email, and user ID).
+     * @return true if the update was successful, false otherwise.
+     * @throws SQLException if a database access error occurs during the update.
+     */
+
     @Override
     public boolean updateUser(User user) throws SQLException {
         Connection conn = null;
@@ -178,6 +186,18 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
     }
 
+    /**
+     * Updates the user's password.
+     * Checks the current password against the stored hash before updating.
+     *
+     * @param userId          User ID to update
+     * @param currentPassword Current password to verify
+     * @param newPassword      New password to store
+     * @return true if password updated successfully
+     * @throws SQLException             If database error occurs
+     * @throws NoSuchAlgorithmException If hashing algorithm not found
+     * @throws InvalidKeySpecException  If password hashing fails
+     */
     @Override
     public boolean updatePassword(int userId, String currentPassword, String newPassword)
             throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -225,6 +245,14 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
     }
 
+    /**
+     * Renews the subscription for a given user by extending the subscription end date by one year.
+     *
+     * @param userId      the ID of the user whose subscription is to be renewed.
+     * @param currentDate the current date used to determine the new subscription end date.
+     * @return true if the subscription was successfully renewed, false otherwise.
+     * @throws SQLException if a database access error occurs.
+     */
     @Override
     public boolean renewSubscription(int userId, LocalDate currentDate) throws SQLException {
         Connection conn = null;
@@ -263,6 +291,13 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
     }
 
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param userId The ID of the user to retrieve
+     * @return User object if found, null otherwise
+     * @throws SQLException If database error occurs
+     */
     @Override
     public User getUserById(int userId) throws SQLException {
         Connection conn = null;
