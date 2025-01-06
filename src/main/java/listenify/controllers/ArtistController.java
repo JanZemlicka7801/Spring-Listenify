@@ -1,6 +1,8 @@
 package listenify.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import listenify.business.Artist;
+import listenify.business.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,12 @@ public class ArtistController {
     }
 
     @GetMapping("/viewArtists")
-    public String processRequest(Model model) {
+    public String processRequest(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         List<Artist> artists = artistDao.getAllArtists();
         model.addAttribute("artists", artists);
         return "artists";
