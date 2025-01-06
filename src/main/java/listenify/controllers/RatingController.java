@@ -12,19 +12,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Controller for managing song ratings and user-related information in the Listenify application.
+ */
 @Controller
 public class RatingController {
 
     private final RatingDaoImpl ratingDao;
 
+    /**
+     * Initializes the RatingController with a {@link RatingDaoImpl} instance.
+     */
     public RatingController() {
         this.ratingDao = new RatingDaoImpl("database.properties");
     }
 
+    /**
+     * Displays the home page with the most popular and top-rated songs.
+     *
+     * @param model the {@link Model} object used to pass data to the view.
+     * @return the name of the Thymeleaf template for the home page.
+     */
     @GetMapping("/")
     public String homePage(Model model) {
         String mostPopularSong;
         String topRatedSong;
+
         try {
             topRatedSong = ratingDao.getTopRatedSong();
             mostPopularSong = ratingDao.getTheMostPopularSong();
@@ -33,11 +46,20 @@ public class RatingController {
             mostPopularSong = "Unable to fetch the most popular song.";
             e.printStackTrace();
         }
+
         model.addAttribute("mostPopularSong", mostPopularSong);
         model.addAttribute("topRatedSong", topRatedSong);
         return "index";
     }
 
+    /**
+     * Displays the user's profile page, including their rated songs.
+     *
+     * @param model   the {@link Model} object used to pass data to the view.
+     * @param session the {@link HttpSession} object to check for logged-in user information.
+     * @return the name of the Thymeleaf template for the profile page or redirects to the login page if the user is not logged in.
+     * @throws SQLException if an error occurs while retrieving rated songs.
+     */
     @GetMapping("/profile")
     public String profilePage(Model model, HttpSession session) throws SQLException {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -51,6 +73,15 @@ public class RatingController {
         return "profile";
     }
 
+    /**
+     * Handles user ratings for songs.
+     *
+     * @param songId  the ID of the song being rated.
+     * @param rating  the rating provided by the user (e.g., 1 to 5 stars).
+     * @param session the {@link HttpSession} object to check for logged-in user information.
+     * @param model   the {@link Model} object used to pass messages to the view.
+     * @return redirects to the song list page after rating or to the login page if the user is not logged in.
+     */
     @PostMapping("/rateSong")
     public String rateSong(
             @RequestParam("songId") int songId,
