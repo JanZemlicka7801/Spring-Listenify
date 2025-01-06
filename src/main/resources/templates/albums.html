@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Albums - Listenify</title>
+  <title th:text="#{albums.title}"></title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-  <h2 class="mb-4">Albums</h2>
+  <h2 class="mb-4" th:text="#{albums.heading}"></h2>
 
   <!-- Search Form -->
   <form action="/searchAlbum" method="get" class="mb-4">
@@ -18,7 +18,7 @@
         <input type="text" class="form-control" name="albumTitle" placeholder="Search Songs by Album Title" required>
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary w-100">Search</button>
+        <button type="submit" class="btn btn-primary w-100" th:text="#{albums.search}"></button>
       </div>
     </div>
   </form>
@@ -28,14 +28,12 @@
     <div class="col" th:each="album : ${albums}">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title" th:text="${album.album_title}">Album Title</h5>
-          <p class="card-text">
-            Artist: <span th:text="${album.artistName}">Artist Name</span>
+          <h5 class="card-title" th:text="${album.album_title}" th:text="#{albums.title2}"></h5>
+          <p class="card-text" th:text="#{albums.artist}"><span th:text="${album.artistName}" th:text="#{albums.aname}"></span>
           </p>
-          <p class="card-text">
-            Release Year: <span th:text="${album.release_year}">2024</span>
+          <p class="card-text" th:text="#{albums.year}"> <span th:text="${album.release_year}">2024</span>
           </p>
-          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary">View Songs</a>
+          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary" th:text="#{albums.viewsongs}">View Songs</a>
         </div>
       </div>
     </div>
