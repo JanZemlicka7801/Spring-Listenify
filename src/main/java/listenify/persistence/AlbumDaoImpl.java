@@ -124,11 +124,4 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
                 .release_year(rs.getInt("release_year"))
                 .build();
     }
-
-    public static void main(String[] args) {
-        //for testing
-        AlbumsDao ab = new AlbumDaoImpl("database.properties");
-        String n = null;
-        System.out.println(ab.getAlbumsByArtistName(n,"OneRepublic"));
-    }
 }

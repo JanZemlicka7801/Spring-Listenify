@@ -1,6 +1,7 @@
 package listenify.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import listenify.config.cardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class UserController {
             return "error";
         }
 
-        if (!config.cardService.cardRegister(creditCard)) {
+        if (!cardService.cardRegister(creditCard)) {
             model.addAttribute("errMsg", "Invalid credit card");
             return "error";
         }
@@ -84,7 +85,7 @@ public class UserController {
 
             session.setAttribute("loggedInUser", user);
             log.info("User {} logged in successfully", username);
-            return "redirect:/home";
+            return "redirect:/";
 
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             log.error("Error during login for username {}: {}", username, e.getMessage());
@@ -123,7 +124,7 @@ public class UserController {
             return "redirect:/login";
         }
 
-        if (!config.cardService.cardRegister(creditCard)) {
+        if (!cardService.cardRegister(creditCard)) {
             model.addAttribute("errMsg", "Invalid credit card");
             return "error";
         }

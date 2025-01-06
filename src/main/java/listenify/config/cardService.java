@@ -1,4 +1,4 @@
-package config;
+package listenify.config;
 
 import java.util.Arrays;
 import java.util.List;
