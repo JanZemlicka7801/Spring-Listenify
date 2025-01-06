@@ -34,7 +34,12 @@ public class ArtistController {
     }
 
     @GetMapping("/searchArtists")
-    public String searchArtists(@RequestParam(name = "artistName") String artistName, Model model) {
+    public String searchArtists(@RequestParam(name = "artistName") String artistName, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         List<Artist> artists = artistDao.searchArtistsByName(artistName);
         model.addAttribute("artists", artists);
         model.addAttribute("searchQuery", artistName);
