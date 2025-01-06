@@ -21,23 +21,4 @@ public class IndexController {
         return "register";
     }
 
-    @GetMapping("/artists")
-    public String artists() {
-        return "artists";
-    }
-
-    @GetMapping("/albums")
-    public String albums() {
-        return "albums";
-    }
-
-    @GetMapping("/songs")
-    public String songs() {
-        return "songs";
-    }
-
-    @GetMapping("/playlists")
-    public String playlists() {
-        return "playlists";
-    }
 }

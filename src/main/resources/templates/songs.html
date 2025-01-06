@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Songs - Listenify</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    .song-list {
+      height: 500px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+    }
+
+    .song-item {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .song-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .song-item.active {
+      background-color: #e9ecef;
+    }
+
+    .song-image-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .player-container {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
 
+<div class="container mt-5">
+  <h2 class="mb-4">Songs</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="song-list">
+        <div th:each="song : ${songs}" class="song-item" onclick="highlightSong(this)">
+          <h5 th:text="${song.songTitle}">Song Title</h5>
+          <p class="mb-0">Duration: <span th:text="${song.duration}">3:30</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="song-image-container">
+        <h3 id="displayedSongTitle">Select a song</h3>
+        <div class="player-container">
+          <audio id="player" controls>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
+          </audio>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new Plyr('#player');
+
+    window.highlightSong = function(element) {
+      document.querySelectorAll('.song-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+      const songTitle = element.querySelector('h5').textContent;
+      document.getElementById('displayedSongTitle').textContent = songTitle;
+    };
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -124,4 +124,40 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
                 .release_year(rs.getInt("release_year"))
                 .build();
     }
+
+    @Override
+    public List<Albums> getAllAlbums() {
+        List<Albums> albumsList = new ArrayList<>();
+        String query = "SELECT albums.*, artists.artist_first_name, artists.artist_last_name, artists.band " +
+                "FROM albums " +
+                "JOIN artists ON albums.artist_id = artists.artist_id";
+
+        try (Connection conn = super.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String artistName;
+                if(rs.getBoolean("band")) {
+                    artistName = rs.getString("artist_last_name");  // For bands, just use the band name
+                } else {
+                    String firstName = rs.getString("artist_first_name");
+                    String lastName = rs.getString("artist_last_name");
+                    artistName = (firstName != null) ? firstName + " " + lastName : lastName;
+                }
+
+                albumsList.add(Albums.builder()
+                        .album_id(rs.getInt("album_id"))
+                        .artist_id(rs.getInt("artist_id"))
+                        .album_title(rs.getString("album_title"))
+                        .release_year(rs.getInt("release_year"))
+                        .artistName(artistName)
+                        .build());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving albums: " + e.getMessage());
+        }
+
+        return albumsList;
+    }
 }
