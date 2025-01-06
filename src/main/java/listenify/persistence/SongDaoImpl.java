@@ -195,14 +195,16 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         }
 
         String query = "SELECT s.* FROM songs s " +
-                "JOIN artists a ON s.artist_id = a.artist_id " +
-                "WHERE CONCAT(a.artist_first_name, ' ', a.artist_last_name) LIKE ?";
+                "JOIN albums alb ON s.album_id = alb.album_id " +
+                "JOIN artists art ON alb.artist_id = art.artist_id " +
+                "WHERE CONCAT(COALESCE(art.artist_first_name, ''), ' ', art.artist_last_name) LIKE ?";
+
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, "%" + artistName + "%");
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                songs.add(mapRow(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    songs.add(mapRow(rs));
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error fetching songs by artist name: " + e.getMessage());
@@ -213,12 +215,12 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
-    /**
-     * Retrieves a list of songs in a specific album.
-     *
-     * @param albumTitle The title of the album to search for.
-     * @return A list of songs in the specified album.
-     */
+        /**
+         * Retrieves a list of songs in a specific album.
+         *
+         * @param albumTitle The title of the album to search for.
+         * @return A list of songs in the specified album.
+         */
     @Override
     public List<Song> getSongsByAlbumTitle(String albumTitle) {
         List<Song> songs = new ArrayList<>();
