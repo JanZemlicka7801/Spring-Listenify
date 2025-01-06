@@ -62,7 +62,12 @@ public class ArtistController {
     public String searchArtistSongs(
             @RequestParam(name = "firstName", required = false) String artistFirstName,
             @RequestParam(name = "lastName") String artistLastName,
-            Model model) {
+            Model model, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
 
         List<Song> songs = songDao.searchSongsByArtist(artistFirstName, artistLastName);
 

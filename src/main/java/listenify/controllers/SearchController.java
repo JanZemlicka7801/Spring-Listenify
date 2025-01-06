@@ -1,8 +1,10 @@
 package listenify.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import listenify.business.Albums;
 import listenify.business.Artist;
 import listenify.business.Song;
+import listenify.business.User;
 import listenify.persistence.AlbumDaoImpl;
 import listenify.persistence.ArtistDaoImpl;
 import listenify.persistence.SongDaoImpl;
@@ -30,7 +32,13 @@ public class SearchController {
     @GetMapping("/search")
     public String search(@RequestParam String query,
                          @RequestParam(defaultValue = "all") String type,
-                         Model model) {
+                         Model model, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         List<Song> songs = new ArrayList<>();
         List<Artist> artists = new ArrayList<>();
         List<Albums> albums = new ArrayList<>();
