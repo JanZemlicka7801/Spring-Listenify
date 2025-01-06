@@ -1,32 +1,42 @@
-[34m2025-01-06 20:37:07[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - Starting SpringListenifyApplication using Java 23 with PID 12044 (C:\Users\lomze\OneDrive - Dundalk Institute of Technology\DkIT\Web Patterns\Spring-Listenify\target\classes started by lomze in C:\Users\lomze\OneDrive - Dundalk Institute of Technology\DkIT\Web Patterns\Spring-Listenify)
+[34m2025-01-06 21:33:33[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - Starting SpringListenifyApplication using Java 23 with PID 26568 (C:\Users\lomze\OneDrive - Dundalk Institute of Technology\DkIT\Web Patterns\Spring-Listenify\target\classes started by lomze in C:\Users\lomze\OneDrive - Dundalk Institute of Technology\DkIT\Web Patterns\Spring-Listenify)
 
-[34m2025-01-06 20:37:07[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - No active profile set, falling back to 1 default profile: "default"
+[34m2025-01-06 21:33:33[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - No active profile set, falling back to 1 default profile: "default"
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.a.catalina.core.StandardService - Starting service [Tomcat]
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.catalina.core.StandardService - Starting service [Tomcat]
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 951 ms
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 896 ms
 
-[34m2025-01-06 20:37:08[0;39m [1;31mINFO [0;39m o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
 
-[34m2025-01-06 20:37:09[0;39m [1;31mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
 
-[34m2025-01-06 20:37:09[0;39m [1;31mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
 
-[34m2025-01-06 20:37:09[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - Started SpringListenifyApplication in 2.008 seconds (process running for 2.621)
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m l.SpringListenifyApplication - Started SpringListenifyApplication in 1.919 seconds (process running for 2.547)
 
-[34m2025-01-06 20:37:12[0;39m [1;31mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 
-[34m2025-01-06 20:37:12[0;39m [1;31mINFO [0;39m o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 
-[34m2025-01-06 20:37:12[0;39m [1;31mINFO [0;39m o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+[34m2025-01-06 21:33:34[0;39m [1;31mINFO [0;39m o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 
-[34m2025-01-06 20:37:16[0;39m [1;31mINFO [0;39m l.controllers.UserController - User dick logged in successfully
+[34m2025-01-06 21:33:41[0;39m [1;31mINFO [0;39m l.controllers.UserController - User dick logged in successfully
+
+[34m2025-01-06 21:33:43[0;39m [1;31mERROR[0;39m org.thymeleaf.TemplateEngine - [THYMELEAF][http-nio-8080-exec-1] Exception processing template "artists": Exception evaluating SpringEL expression: "artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}" (template: "artists" - line 39, col 31)
+org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}" (template: "artists" - line 39, col 31)
+	at org.thymeleaf.spring6.expression.SPELVariableExpressionEvaluator.evaluate(SPELVariableExpressionEvaluator.java:292)
+Caused by: org.springframework.expression.spel.SpelParseException: Expression [artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}] @20: EL1043E: Unexpected token. Expected 'identifier' but was 'lcurly({)'
+	at org.springframework.expression.spel.standard.InternalSpelExpressionParser.internalException(InternalSpelExpressionParser.java:1072)
+
+[34m2025-01-06 21:33:43[0;39m [1;31mERROR[0;39m o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}" (template: "artists" - line 39, col 31)] with root cause
+org.springframework.expression.spel.SpelParseException: Expression [artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}] @20: EL1043E: Unexpected token. Expected 'identifier' but was 'lcurly({)'
+	at org.springframework.expression.spel.standard.InternalSpelExpressionParser.internalException(InternalSpelExpressionParser.java:1072)
 

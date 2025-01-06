@@ -2,27 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Artist Songs - Listenify</title>
+    <title th:text="#{artistSongs.title}">Artist Songs - Listenify</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-    <h2 class="mb-4" th:text="'Songs by ' + ${artistName}"></h2>
+    <h2 class="mb-4" th:text="#{artistSongs.heading} + ' ' + ${artistName}">Songs by Artist</h2>
 
     <div th:if="${songs != null}">
         <div th:each="song : ${songs}" class="mb-3">
             <h5 th:text="${song.songTitle}">Song Title</h5>
-            <p>Duration: <span th:text="${song.duration}">3:30</span></p>
+            <p>
+                <span th:text="#{artistSongs.duration}">Duration:</span>
+                <span th:text="${song.duration}">3:30</span>
+            </p>
         </div>
     </div>
 
     <div th:if="${songs == null || songs.isEmpty()}">
-        <p>No songs found for the given artist.</p>
+        <p th:text="#{artistSongs.noSongs}">No songs found for the given artist.</p>
     </div>
 
-    <a href="/viewArtists" class="btn btn-secondary">Back to Artists</a>
+    <a href="/viewArtists" class="btn btn-secondary" th:text="#{artistSongs.backToArtists}">Back to Artists</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>

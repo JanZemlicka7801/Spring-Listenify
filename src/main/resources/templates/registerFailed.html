@@ -2,17 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Failed</title>
+    <title th:text="#{registrationFailed.title}">Registration Failed</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 <div class="container mt-5">
     <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">Registration Failed</h4>
+        <h4 class="alert-heading" th:text="#{registrationFailed.heading}">Registration Failed</h4>
         <p th:text="${message}">Registration failed.</p>
         <hr>
-        <p class="mb-0">Please <a href="/register">try again</a>.</p>
+        <p class="mb-0">
+            <span th:text="#{registrationFailed.prompt}">Please</span>
+            <a href="/register" th:text="#{registrationFailed.tryAgainLink}">try again</a>.
+        </p>
     </div>
 </div>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Playlist - Listenify</title>
+    <title th:text="#{createPlaylist.title}">Create New Playlist - Listenify</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -13,19 +13,20 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Create New Playlist</h3>
+                    <h3 class="card-title" th:text="#{createPlaylist.heading}">Create New Playlist</h3>
                 </div>
                 <div class="card-body">
                     <form action="/playlists/create" method="post">
                         <div class="mb-3">
-                            <label for="playlistName" class="form-label">Playlist Name</label>
+                            <label for="playlistName" class="form-label" th:text="#{createPlaylist.playlistNameLabel}">Playlist Name</label>
                             <input type="text"
                                    class="form-control"
                                    id="playlistName"
                                    name="playlistName"
                                    required
                                    minlength="1"
-                                   maxlength="100">
+                                   maxlength="100"
+                                   th:placeholder="#{createPlaylist.playlistNamePlaceholder}">
                         </div>
 
                         <div class="mb-3 form-check">
@@ -33,12 +34,12 @@
                                    class="form-check-input"
                                    id="isPublic"
                                    name="isPublic">
-                            <label class="form-check-label" for="isPublic">Make this playlist public</label>
+                            <label class="form-check-label" for="isPublic" th:text="#{createPlaylist.isPublicLabel}">Make this playlist public</label>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Create Playlist</button>
-                            <a href="/playlists" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary" th:text="#{createPlaylist.submitButton}">Create Playlist</button>
+                            <a href="/playlists" class="btn btn-secondary" th:text="#{createPlaylist.cancelButton}">Cancel</a>
                         </div>
                     </form>
                 </div>

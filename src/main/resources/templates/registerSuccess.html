@@ -2,17 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Successful</title>
+    <title th:text="#{registrationSuccess.title}">Registration Successful</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 <div class="container mt-5">
     <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Registration Successful!</h4>
-        <p>Welcome to Listenify, <span th:text="${registeredUser.username}">user</span>!</p>
+        <h4 class="alert-heading" th:text="#{registrationSuccess.heading}">Registration Successful!</h4>
+        <p>
+            <span th:text="#{registrationSuccess.welcome}">Welcome to Listenify,</span>
+            <span th:text="${registeredUser.username}">user</span>!
+        </p>
         <hr>
-        <p class="mb-0">Please <a href="/login">login</a> to continue.</p>
+        <p class="mb-0">
+            <span th:text="#{registrationSuccess.prompt}">Please</span>
+            <a href="/login" th:text="#{registrationSuccess.loginLink}">login</a>
+            <span th:text="#{registrationSuccess.continue}">to continue.</span>
+        </p>
     </div>
 </div>
 </body>

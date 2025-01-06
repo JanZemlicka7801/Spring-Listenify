@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Songs - Listenify</title>
+  <title th:text="#{songs.title}">Songs - Listenify</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
   <style>
@@ -51,12 +51,12 @@
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-  <h2 class="mb-4">Songs</h2>
+  <h2 class="mb-4" th:text="#{songs.heading}">Songs</h2>
 
   <form class="mb-4" action="/getSong" method="get">
     <div class="input-group">
-      <input type="text" class="form-control" name="title" placeholder="Search for a song by title" required>
-      <button class="btn btn-primary" type="submit">Search</button>
+      <input type="text" class="form-control" name="title" th:placeholder="#{songs.searchPlaceholder}" required>
+      <button class="btn btn-primary" type="submit" th:text="#{songs.searchButton}">Search</button>
     </div>
   </form>
 
@@ -65,7 +65,7 @@
       <div class="song-list">
         <div th:each="song : ${songs}" class="song-item" onclick="highlightSong(this)">
           <h5 th:text="${song.songTitle}">Song Title</h5>
-          <p class="mb-0">Duration: <span th:text="${song.duration}">3:30</span></p>
+          <p class="mb-0" th:text="#{songs.duration} + ': ' + ${song.duration}">Duration: 3:30</p>
 
           <div class="action-buttons">
             <form th:action="@{/rateSong}" method="post" class="rating-container">
@@ -77,12 +77,13 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
               </select>
-              <button type="submit" class="btn btn-sm btn-success">Rate</button>
+              <button type="submit" class="btn btn-sm btn-success" th:text="#{songs.rateButton}">Rate</button>
             </form>
 
             <button th:if="${session.loggedInUser}"
                     class="btn btn-sm btn-primary"
-                    th:onclick="'showAddToPlaylistModal(' + ${song.songId} + ')'">
+                    th:onclick="'showAddToPlaylistModal(' + ${song.songId} + ')'"
+                    th:text="#{songs.addToPlaylistButton}">
               Add to Playlist
             </button>
           </div>
@@ -92,7 +93,7 @@
 
     <div class="col-md-6">
       <div class="song-image-container">
-        <h3 id="displayedSongTitle">Select a song</h3>
+        <h3 id="displayedSongTitle" th:text="#{songs.selectSongTitle}">Select a song</h3>
         <div class="player-container">
           <audio id="player" controls>
             <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
@@ -107,23 +108,23 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add to Playlist</h5>
+        <h5 class="modal-title" th:text="#{songs.addToPlaylistModalTitle}">Add to Playlist</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="addToPlaylistForm" method="post">
           <input type="hidden" id="modalSongId" name="songId">
           <div class="mb-3">
-            <label class="form-label">Select Playlist:</label>
+            <label class="form-label" th:text="#{songs.selectPlaylistLabel}">Select Playlist:</label>
             <select name="playlistId" class="form-select" required onchange="updateFormAction(this.value)">
-              <option value="">Choose a playlist...</option>
+              <option value="" th:text="#{songs.selectPlaylistPlaceholder}">Choose a playlist...</option>
               <option th:each="playlist : ${userPlaylists}"
                       th:value="${playlist.playlist_id}"
                       th:text="${playlist.playlist_name}">
               </option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Add Song</button>
+          <button type="submit" class="btn btn-primary" th:text="#{songs.addSongButton}">Add Song</button>
         </form>
       </div>
     </div>

@@ -2,38 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="#{albums.title}"></title>
+  <title th:text="#{albums.title}">Albums - Listenify</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-  <h2 class="mb-4" th:text="#{albums.heading}"></h2>
+  <h2 class="mb-4" th:text="#{albums.heading}">Albums</h2>
 
-  <!-- Search Form -->
   <form action="/searchAlbum" method="get" class="mb-4">
     <div class="row">
       <div class="col-md-10">
-        <input type="text" class="form-control" name="albumTitle" placeholder="Search Songs by Album Title" required>
+        <input type="text" class="form-control" name="albumTitle" th:placeholder="#{albums.searchPlaceholder}" required>
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary w-100" th:text="#{albums.search}"></button>
+        <button type="submit" class="btn btn-primary w-100" th:text="#{albums.searchButton}">Search</button>
       </div>
     </div>
   </form>
 
-  <!-- Albums List -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" th:each="album : ${albums}">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title" th:text="${album.album_title}" th:text="#{albums.title2}"></h5>
-          <p class="card-text" th:text="#{albums.artist}"><span th:text="${album.artistName}" th:text="#{albums.aname}"></span>
+          <h5 class="card-title" th:text="${album.album_title}">Album Title</h5>
+          <p class="card-text">
+            <span th:text="#{albums.artist}">Artist:</span>
+            <span th:text="${album.artistName}">Artist Name</span>
           </p>
-          <p class="card-text" th:text="#{albums.year}"> <span th:text="${album.release_year}">2024</span>
+          <p class="card-text">
+            <span th:text="#{albums.year}">Release Year:</span>
+            <span th:text="${album.release_year}">2024</span>
           </p>
-          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary" th:text="#{albums.viewsongs}">View Songs</a>
+          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary" th:text="#{albums.viewSongsButton}">View Songs</a>
         </div>
       </div>
     </div>

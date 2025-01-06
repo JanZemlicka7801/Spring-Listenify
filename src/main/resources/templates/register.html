@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register - Listenify</title>
+    <title th:text="#{register.title}">Register - Listenify</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -12,12 +12,12 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header">
-                    <h3 class="text-center mb-0">Register for Listenify</h3>
+                    <h3 class="text-center mb-0" th:text="#{register.heading}">Register for Listenify</h3>
                 </div>
                 <div class="card-body">
                     <form action="/register" method="post" onsubmit="return validateForm()">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
+                            <label for="username" class="form-label" th:text="#{register.username}">Username</label>
                             <input type="text"
                                    class="form-control"
                                    id="username"
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label" th:text="#{register.email}">Email</label>
                             <input type="email"
                                    class="form-control"
                                    id="email"
@@ -36,37 +36,39 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label" th:text="#{register.password}">Password</label>
                             <input type="password"
                                    class="form-control"
                                    id="password"
                                    name="password"
                                    required>
-                            <small class="text-muted">
+                            <small class="text-muted" th:text="#{register.passwordHint}">
                                 Password must contain at least 8 characters, one uppercase letter,
                                 one lowercase letter, one number, and one special character.
                             </small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="creditCard" class="form-label">Credit Card Number</label>
+                            <label for="creditCard" class="form-label" th:text="#{register.creditCard}">Credit Card Number</label>
                             <input type="text"
                                    class="form-control"
                                    id="creditCard"
                                    name="creditCard"
                                    required>
-                            <small class="text-muted">
+                            <small class="text-muted" th:text="#{register.creditCardHint}">
                                 We accept Visa and Mastercard
                             </small>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary" th:text="#{register.submit}">Register</button>
                         </div>
                     </form>
 
                     <div class="text-center mt-3">
-                        <p>Already have an account? <a href="/login">Login here</a></p>
+                        <p th:text="#{register.alreadyHaveAccount}">
+                            Already have an account? <a href="/login" th:text="#{register.loginLink}">Login here</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -77,7 +79,7 @@
 <script>
     function validateForm() {
         const password = document.getElementById('password').value;
-        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$#!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/;
 
         if (!passwordPattern.test(password)) {
             alert('Password must meet the specified requirements.');
@@ -85,7 +87,7 @@
         }
 
         const creditCard = document.getElementById('creditCard').value;
-        document.getElementById('creditCard').value = creditCard.replace(/\s/g, '');
+        document.getElementById('creditCard').value = creditCard.replace(/\\s/g, '');
 
         return true;
     }

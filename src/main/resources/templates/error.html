@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Error</title>
+  <title th:text="#{error.title}">Error</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -10,10 +10,10 @@
 
 <div class="container mt-5">
   <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">Error!</h4>
+    <h4 class="alert-heading" th:text="#{error.heading}">Error!</h4>
     <p th:text="${errMsg}">An error occurred.</p>
   </div>
-  <a href="/" class="btn btn-primary">Return to Home</a>
+  <a href="/" class="btn btn-primary" th:text="#{error.returnHome}">Return to Home</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>

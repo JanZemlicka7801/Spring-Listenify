@@ -2,29 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Artists - Listenify</title>
+    <title th:text="#{artists.title}">Artists - Listenify</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Artists</h2>
+    <h2 class="mb-4" th:text="#{artists.heading}">Artists</h2>
     <form action="/searchArtistSongs" method="get" class="mb-4">
         <div class="row">
             <div class="col-md-5">
-                <input type="text" class="form-control" name="firstName" placeholder="Enter Artist First Name (Optional)">
+                <input type="text" class="form-control" name="firstName" th:placeholder="#{artists.searchFirstName}">
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" name="lastName" placeholder="Enter Artist Last Name" required>
+                <input type="text" class="form-control" name="lastName" th:placeholder="#{artists.searchLastName}" required>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Search Songs</button>
+                <button type="submit" class="btn btn-primary" th:text="#{artists.searchButton}">Search Songs</button>
             </div>
         </div>
     </form>
 
-    <h2 class="mb-4">Artists</h2>
+    <h2 class="mb-4" th:text="#{artists.heading}">Artists</h2>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" th:each="artist : ${artists}">
@@ -36,7 +36,7 @@
                     </h5>
                     <p class="card-text" th:text="${artist.description}">Artist description</p>
                     <p class="card-text">
-                        <span th:text="${artist.band == 1 ? 'Band' : 'Solo Artist'}">Artist Type:</span>
+                        <span th:text="${artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}}">Artist Type:</span>
                     </p>
                 </div>
             </div>
