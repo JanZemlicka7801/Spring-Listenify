@@ -15,4 +15,5 @@ public interface UserDao {
     boolean updateUser(User user) throws SQLException;
     boolean updatePassword(int userId, String currentPassword, String newPassword) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
     boolean renewSubscription(int userId, LocalDate currentDate) throws SQLException;
+    User getUserById(int userId) throws SQLException;
 }

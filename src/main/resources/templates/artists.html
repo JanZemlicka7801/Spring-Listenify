@@ -9,11 +9,18 @@
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-    <!-- Search Form -->
-    <form action="/searchArtists" method="get" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="artistName" class="form-control" placeholder="Search for an artist..." required>
-            <button type="submit" class="btn btn-primary">Search</button>
+    <h2 class="mb-4">Artists</h2>
+    <form action="/searchArtistSongs" method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="firstName" placeholder="Enter Artist First Name (Optional)">
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="lastName" placeholder="Enter Artist Last Name" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Search Songs</button>
+            </div>
         </div>
     </form>
 

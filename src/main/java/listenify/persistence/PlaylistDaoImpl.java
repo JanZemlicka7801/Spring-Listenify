@@ -283,4 +283,35 @@ public class PlaylistDaoImpl extends MySQLDao implements PlaylistDao {
             if (conn != null) conn.close();
         }
     }
+
+    @Override
+    public Playlist getPlaylistById(int playlistId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Playlist playlist = null;
+
+        try {
+            conn = getConnection();
+            String query = "SELECT * FROM Playlists WHERE playlist_id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, playlistId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                playlist = new Playlist(
+                        rs.getInt("playlist_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("playlist_name"),
+                        rs.getBoolean("is_public"),
+                        rs.getDate("creation_date").toLocalDate()
+                );
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+        return playlist;
+    }
 }
