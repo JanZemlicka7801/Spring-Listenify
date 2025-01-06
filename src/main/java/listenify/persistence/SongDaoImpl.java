@@ -1,6 +1,7 @@
 package listenify.persistence;
 
 import listenify.business.Song;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class SongDaoImpl extends MySQLDao implements SongDao {
     public SongDaoImpl() {
         super();
@@ -163,10 +165,37 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         return songs;
     }
 
+    @Override
+    public List<Song> searchSongsByTitle(String keyword) {
+        List<Song> songs = new ArrayList<>();
+        String sql = "SELECT * FROM songs WHERE song_title LIKE ?";
+        try (Connection conn = super.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    songs.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            log.error("SQLException occurred when searching songs by title keyword: " + keyword, e);
+        }
+        return songs;
+    }
 
+    private Song mapRow(ResultSet rs) throws SQLException {
+        return Song.builder()
+                .songId(rs.getInt("song_id"))
+                .albumId(rs.getInt("album_id"))
+                .songTitle(rs.getString("song_title"))
+                .duration(rs.getTime("duration"))
+                .build();
+    }
     public static void main(String[] args) {
-        SongDao s = new SongDaoImpl("database.properties");
+        SongDaoImpl s = new SongDaoImpl("database.properties");
         System.out.println(s.getAllSongsByAlbumId(1));
 
+        List<Song> searchResults = s.searchSongsByTitle("Love");
+        searchResults.forEach(System.out::println);
     }
 }
