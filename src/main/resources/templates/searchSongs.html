@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Songs</title>
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
+
+<h1>Search for a Song</h1>
+<form action="/searchSongs" method="get">
+    <label for="songName">Enter Song Name or Part of It:</label>
+    <input type="text" id="songName" name="songName" required>
+    <button type="submit">Search</button>
+</form>
+</body>
+</html>
