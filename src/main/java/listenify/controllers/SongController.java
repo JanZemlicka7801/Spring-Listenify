@@ -51,11 +51,6 @@ public class SongController {
         }
     }
 
-    @GetMapping("/searchSong")
-    public String searchForm() {
-        return "searchSongs";
-    }
-
     @GetMapping("/searchSongs")
     public String searchSongs(@RequestParam(name = "songName") String songName, Model model) {
         SongDao songDao = new SongDaoImpl("database.properties");
