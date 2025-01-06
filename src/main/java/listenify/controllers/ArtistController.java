@@ -73,6 +73,6 @@ public class ArtistController {
             model.addAttribute("artistName", artistFirstName != null ? artistFirstName + " " + artistLastName : artistLastName);
         }
 
-        return "artistSongs";
+        return "artistList";
     }
 }
