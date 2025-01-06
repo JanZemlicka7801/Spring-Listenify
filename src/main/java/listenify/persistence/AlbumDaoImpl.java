@@ -139,7 +139,7 @@ public class AlbumDaoImpl extends MySQLDao implements AlbumsDao{
             while (rs.next()) {
                 String artistName;
                 if(rs.getBoolean("band")) {
-                    artistName = rs.getString("artist_last_name");  // For bands, just use the band name
+                    artistName = rs.getString("artist_last_name");
                 } else {
                     String firstName = rs.getString("artist_first_name");
                     String lastName = rs.getString("artist_last_name");
