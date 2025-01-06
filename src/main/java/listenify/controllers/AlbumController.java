@@ -22,7 +22,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/albums")
 public class AlbumController {
-
     private final AlbumsDao albumsDao;
 
     public AlbumController() {
@@ -41,7 +40,7 @@ public class AlbumController {
         return "albums";
     }
 
-    @GetMapping("/searchAlbum")
+    @GetMapping("/search")
     public String searchAlbum(@RequestParam(name = "albumTitle") String albumTitle, Model model) {
         if (albumTitle == null || albumTitle.isBlank()) {
             model.addAttribute("errMsg", "Album title cannot be empty.");
