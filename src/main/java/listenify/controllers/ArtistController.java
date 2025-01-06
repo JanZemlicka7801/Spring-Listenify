@@ -1,6 +1,9 @@
 package listenify.controllers;
 
 import listenify.business.Artist;
+import listenify.business.Song;
+import listenify.persistence.SongDao;
+import listenify.persistence.SongDaoImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +17,11 @@ import java.util.List;
 public class ArtistController {
 
     private final ArtistDao artistDao;
+    private final SongDao songDao;
 
     public ArtistController(){
         this.artistDao = new ArtistDaoImpl();
+        this.songDao = new SongDaoImpl("database.properties");
     }
 
     @GetMapping("/viewArtists")
@@ -32,5 +37,22 @@ public class ArtistController {
         model.addAttribute("artists", artists);
         model.addAttribute("searchQuery", artistName);
         return "artists";
+    }
+
+    @GetMapping("/searchArtistSongs")
+    public String searchArtistSongs(
+            @RequestParam(name = "firstName", required = false) String artistFirstName,
+            @RequestParam(name = "lastName") String artistLastName,
+            Model model) {
+
+        List<Song> songs = songDao.searchSongsByArtist(artistFirstName, artistLastName);
+
+        if (songs.isEmpty()) {
+            model.addAttribute("errMsg", "No songs found for the given artist.");
+        } else {
+            model.addAttribute("songs", songs);
+        }
+
+        return "artistList";
     }
 }
