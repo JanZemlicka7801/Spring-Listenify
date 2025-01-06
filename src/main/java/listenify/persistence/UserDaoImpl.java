@@ -148,4 +148,71 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (conn != null) conn.close();
         }
     }
+
+    @Override
+    public boolean updateUser(User user) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = getConnection();
+            String query = "UPDATE Users SET username = ?, email = ? WHERE user_id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, user.getUserId());
+
+            return stmt.executeUpdate() > 0;
+        } finally {
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    @Override
+    public boolean updatePassword(int userId, String currentPassword, String newPassword)
+            throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+
+        Connection conn = null;
+        PreparedStatement selectStmt = null;
+        PreparedStatement updateStmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+
+            String selectQuery = "SELECT password, salt FROM Users WHERE user_id = ?";
+            selectStmt = conn.prepareStatement(selectQuery);
+            selectStmt.setInt(1, userId);
+            rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                String storedHash = rs.getString("password");
+                String storedSalt = rs.getString("salt");
+
+                String computedHash = PasswordHash.hashPassword(currentPassword, storedSalt);
+
+                if (!computedHash.equals(storedHash)) {
+                    return false;
+                }
+
+                String newSalt = PasswordHash.generateSalt();
+                String newHash = PasswordHash.hashPassword(newPassword, newSalt);
+
+                String updateQuery = "UPDATE Users SET password = ?, salt = ? WHERE user_id = ?";
+                updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setString(1, newHash);
+                updateStmt.setString(2, newSalt);
+                updateStmt.setInt(3, userId);
+
+                return updateStmt.executeUpdate() > 0;
+            }
+            return false;
+        } finally {
+            if (rs != null) rs.close();
+            if (selectStmt != null) selectStmt.close();
+            if (updateStmt != null) updateStmt.close();
+            if (conn != null) conn.close();
+        }
+    }
 }
