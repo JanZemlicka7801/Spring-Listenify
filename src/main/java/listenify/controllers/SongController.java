@@ -36,7 +36,7 @@ public class SongController {
 
         if (song != null) {
             model.addAttribute("song", song);
-            return "viewSong"; // You can create a `viewSong.html` to display the song details
+            return "songList"; // You can create a `viewSong.html` to display the song details
         } else {
             model.addAttribute("errMsg", "No song found with title: " + title);
             return "error";

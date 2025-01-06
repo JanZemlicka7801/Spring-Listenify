@@ -8,9 +8,9 @@
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <h1>Search for a Song</h1>
-<form action="/searchSongs" method="get">
-    <label for="songName">Enter Song Name or Part of It:</label>
-    <input type="text" id="songName" name="songName" required>
+<form action="/getSong" method="get">
+    <label for="title">Enter Song Title:</label>
+    <input type="text" id="title" name="title" required>
     <button type="submit">Search</button>
 </form>
 </body>
