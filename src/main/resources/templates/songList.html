@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Song List</title>
+    <title>Search Results</title>
 </head>
 <body>
 <h1>Search Results</h1>
-<ul>
-    <li th:each="song : ${songs}">
-        <span th:text="${song.songTitle}"></span> by <span th:text="${song.artistName}"></span>
-    </li>
-</ul>
-<a href="/searchSong">Back to Search</a>
+
+<div th:if="${song != null}">
+    <p>Song Title: <span th:text="${song.songTitle}"></span></p>
+    <p>Album ID: <span th:text="${song.albumId}"></span></p>
+    <p>Duration: <span th:text="${song.duration}"></span></p>
+</div>
+
+<div th:if="${song == null}">
+    <p>No song found for the given title.</p>
+</div>
+
+<a href="/">Back to Search</a>
 </body>
 </html>

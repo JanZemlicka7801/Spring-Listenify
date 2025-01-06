@@ -18,7 +18,7 @@ public class SongController {
     @GetMapping("/viewSongs")
     public String viewSongs(Model model) {
         SongDao songDao = new SongDaoImpl("database.properties");
-        List<Song> songs = songDao.getAllSongsByAlbumId(1); // Example for albumId = 1, adjust as needed.
+        List<Song> songs = songDao.getAllSongsByAlbumId(1);
         model.addAttribute("songs", songs);
         return "songList";
     }
@@ -36,7 +36,7 @@ public class SongController {
 
         if (song != null) {
             model.addAttribute("song", song);
-            return "songList"; // You can create a `viewSong.html` to display the song details
+            return "songList";
         } else {
             model.addAttribute("errMsg", "No song found with title: " + title);
             return "error";
@@ -45,7 +45,7 @@ public class SongController {
 
     @GetMapping("/searchSong")
     public String searchForm() {
-        return "searchSongs"; // Points to searchSong.html
+        return "searchSongs";
     }
 
     @GetMapping("/searchSongs")
@@ -53,6 +53,6 @@ public class SongController {
         SongDao songDao = new SongDaoImpl("database.properties");
         List<Song> songs = songDao.searchSongsByTitle(songName);
         model.addAttribute("songs", songs);
-        return "songList"; // Points to songList.html
+        return "songList";
     }
 }
