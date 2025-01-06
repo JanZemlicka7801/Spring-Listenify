@@ -102,3 +102,13 @@ CREATE TABLE Ratings
     FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (song_id) REFERENCES Songs (song_id) ON DELETE CASCADE
 );
+
+-- User table altered to now hold subscription data
+ALTER TABLE Users
+    ADD COLUMN subscription_start_date DATE,
+    ADD COLUMN subscription_end_date DATE;
+
+-- This command is to set all exisiting users subscription date to date and set end date to a year from then
+UPDATE Users
+SET subscription_start_date = registration_date,
+    subscription_end_date = DATE_ADD(registration_date, INTERVAL 1 YEAR);
