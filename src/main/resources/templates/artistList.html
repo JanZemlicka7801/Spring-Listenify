@@ -2,40 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Artist Search Results - Listenify</title>
+    <title>Artist Songs - Listenify</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Search Results</h2>
+    <h2 class="mb-4" th:text="'Songs by ' + ${artistName}"></h2>
 
-    <div th:if="${artists.size() > 0}">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col" th:each="artist : ${artists}">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <span th:if="${artist.artistFirstName}" th:text="${artist.artistFirstName + ' '}"></span>
-                            <span th:text="${artist.artistLastName}"></span>
-                        </h5>
-                        <p class="card-text" th:text="${artist.description}">Artist description</p>
-                        <p class="card-text">
-                            <span th:text="${artist.band == 1 ? 'Band' : 'Solo Artist'}">Artist Type:</span>
-                        </p>
-                        <a th:href="@{/artists/{id}(id=${artist.artistId})}" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+    <div th:if="${songs != null}">
+        <div th:each="song : ${songs}" class="mb-3">
+            <h5 th:text="${song.songTitle}">Song Title</h5>
+            <p>Duration: <span th:text="${song.duration}">3:30</span></p>
         </div>
     </div>
 
-    <div th:if="${artists.size() == 0}">
-        <p>No artists found matching your search criteria.</p>
+    <div th:if="${songs == null || songs.isEmpty()}">
+        <p>No songs found for the given artist.</p>
     </div>
 
-    <a href="/viewArtists" class="btn btn-secondary mt-3">Back to Artists</a>
+    <a href="/viewArtists" class="btn btn-secondary">Back to Artists</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
