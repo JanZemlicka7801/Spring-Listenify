@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
 <h1>Search Results</h1>
 
 <div th:if="${song != null}">
@@ -17,6 +19,6 @@
     <p>No song found for the given title.</p>
 </div>
 
-<a href="/">Back to Search</a>
+<a href="/searchSong">Back to Search</a>
 </body>
 </html>
