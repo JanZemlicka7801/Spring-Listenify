@@ -9,7 +9,9 @@ import java.util.List;
 
 public class RatingDaoImpl extends MySQLDao implements RatingDao {
 
-    public RatingDaoImpl(String dbName) {super(dbName);}
+    public RatingDaoImpl(String dbName) {
+        super(dbName);
+    }
 
     /**
      * Rates a song by a user, or updates the rating if it already exists.
@@ -101,7 +103,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
 
                 if (rs.next()) {
                     return "Top-Rated Song: " + rs.getString("song_title")
-                            + ", Average Rating: " + rs.getDouble("avg_rating");
+                            + ", Rating: " + rs.getDouble("avg_rating");
                 }
             }
         } catch (SQLException e) {
@@ -130,8 +132,7 @@ public class RatingDaoImpl extends MySQLDao implements RatingDao {
              ResultSet rs = ps.executeQuery()) {
 
             if (rs.next()) {
-                return "Most Popular Song: " + rs.getString("song_title")
-                        + ", In Playlists: " + rs.getInt("playlist_count");
+                return "Most Popular Song: " + rs.getString("song_title");
             }
         } catch (SQLException e) {
             System.err.println("SQLException in getTheMostPopularSong: " + e.getMessage());

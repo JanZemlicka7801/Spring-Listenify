@@ -1,7 +1,7 @@
 package listenify.persistence;
 
 import listenify.business.User;
-import config.PasswordHash;
+import listenify.config.passwordHash;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -63,7 +63,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (rs.next()) {
                 String storedHash = rs.getString("password");
                 String storedSalt = rs.getString("salt");
-                String computedHash = PasswordHash.hashPassword(password, storedSalt);
+                String computedHash = passwordHash.hashPassword(password, storedSalt);
 
                 if (computedHash.equals(storedHash)) {
                     user = new User(
@@ -127,8 +127,8 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 return false;
             }
 
-            String salt = PasswordHash.generateSalt();
-            String hashedPassword = PasswordHash.hashPassword(user.getPassword(), salt);
+            String salt = passwordHash.generateSalt();
+            String hashedPassword = passwordHash.hashPassword(user.getPassword(), salt);
 
             String query = "INSERT INTO Users (username, password, salt, email, registration_date) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query);
@@ -192,14 +192,14 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 String storedHash = rs.getString("password");
                 String storedSalt = rs.getString("salt");
 
-                String computedHash = PasswordHash.hashPassword(currentPassword, storedSalt);
+                String computedHash = passwordHash.hashPassword(currentPassword, storedSalt);
 
                 if (!computedHash.equals(storedHash)) {
                     return false;
                 }
 
-                String newSalt = PasswordHash.generateSalt();
-                String newHash = PasswordHash.hashPassword(newPassword, newSalt);
+                String newSalt = passwordHash.generateSalt();
+                String newHash = passwordHash.hashPassword(newPassword, newSalt);
 
                 String updateQuery = "UPDATE Users SET password = ?, salt = ? WHERE user_id = ?";
                 updateStmt = conn.prepareStatement(updateQuery);
