@@ -18,10 +18,19 @@
         </div>
 
         <div class="card-body">
-          <div th:if="${isOwner}" class="mb-4">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSongModal">
-              Add Song
-            </button>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <p class="mb-1">Created by: <span th:text="${playlistOwner.username}">Owner</span></p>
+              <p class="mb-0">Created on: <span th:text="${#temporals.format(playlist.creation_date, 'dd-MM-yyyy')}">Date</span></p>
+            </div>
+            <div th:if="${isOwner}" class="btn-group">
+              <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addSongModal">
+                Add Song
+              </button>
+              <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#renamePlaylistModal">
+                Rename
+              </button>
+            </div>
           </div>
 
           <div class="table-responsive">
@@ -44,6 +53,9 @@
                   </form>
                 </td>
               </tr>
+              <tr th:if="${playlistSongs.empty}">
+                <td colspan="3" class="text-center">No songs in this playlist</td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -53,12 +65,11 @@
   </div>
 </div>
 
-<!-- Add Song Modal -->
-<div class="modal fade" id="addSongModal" tabindex="-1">
+<div class="modal fade" id="addSongModal" tabindex="-1" th:if="${isOwner}">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add Song to Playlist</h5>
+        <h5 class="modal-title">Add Song</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -73,6 +84,28 @@
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Add Song</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="renamePlaylistModal" tabindex="-1" th:if="${isOwner}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rename Playlist</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/playlists/{id}/rename(id=${playlist.playlist_id})}" method="post">
+          <div class="mb-3">
+            <label for="newName" class="form-label">New Name</label>
+            <input type="text" class="form-control" id="newName" name="newName"
+                   th:value="${playlist.playlist_name}" required maxlength="100">
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
       </div>
     </div>

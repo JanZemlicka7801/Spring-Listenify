@@ -201,4 +201,43 @@ public class PlaylistController {
             return "error";
         }
     }
+
+    @PostMapping("/{playlistId}/rename")
+    public String renamePlaylist(
+            @PathVariable int playlistId,
+            @RequestParam String newName,
+            Model model,
+            HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        if (newName == null || newName.trim().isEmpty()) {
+            model.addAttribute("errMsg", "Playlist name cannot be empty");
+            return "error";
+        }
+
+        try {
+            PlaylistDao playlistDao = new PlaylistDaoImpl("database.properties");
+
+            if (!playlistDao.isPlaylistOwner(playlistId, loggedInUser.getUserId())) {
+                model.addAttribute("errMsg", "You can only rename your own playlists");
+                return "error";
+            }
+
+            if (playlistDao.renamePlaylist(playlistId, newName.trim())) {
+                return "redirect:/playlists/" + playlistId;
+            } else {
+                model.addAttribute("errMsg", "Failed to rename playlist");
+                return "error";
+            }
+
+        } catch (SQLException e) {
+            log.error("Error renaming playlist {}: {}", playlistId, e.getMessage());
+            model.addAttribute("errMsg", "Error renaming playlist");
+            return "error";
+        }
+    }
 }
