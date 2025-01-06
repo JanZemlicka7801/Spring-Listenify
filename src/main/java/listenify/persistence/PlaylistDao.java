@@ -19,4 +19,6 @@ public interface PlaylistDao {
 
     boolean isPlaylistOwner(int playlistId, int userId) throws SQLException;
     boolean canUserAccessPlaylist(int playlistId, int userId) throws SQLException;
+
+    Playlist getPlaylistById(int playlistId) throws SQLException;
 }

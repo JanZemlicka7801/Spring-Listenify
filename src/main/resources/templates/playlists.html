@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlists</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Playlists</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="h5 mb-0">Your Playlists</h3>
+                </div>
+                <div class="card-body">
+                    <div th:if="${userPlaylists.empty}" class="alert alert-info">
+                        You haven't created any playlists yet.
+                    </div>
+                    <div th:unless="${userPlaylists.empty}" class="list-group">
+                        <a th:each="playlist : ${userPlaylists}"
+                           th:href="@{/playlists/{id}(id=${playlist.playlist_id})}"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span th:text="${playlist.playlist_name}">Playlist Name</span>
+                                <span class="badge bg-secondary" th:text="${playlist.is_public ? 'Public' : 'Private'}">Status</span>
+                            </div>
+                            <small class="text-muted" th:text="${'Created: ' + #temporals.format(playlist.creation_date, 'dd-MM-yyyy')}">Creation Date</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="h5 mb-0">Public Playlists</h3>
+                </div>
+                <div class="card-body">
+                    <div th:if="${publicPlaylists.empty}" class="alert alert-info">
+                        No public playlists available.
+                    </div>
+                    <div th:unless="${publicPlaylists.empty}" class="list-group">
+                        <a th:each="playlist : ${publicPlaylists}"
+                           th:href="@{/playlists/{id}(id=${playlist.playlist_id})}"
+                           th:if="${playlist.user_id != session.loggedInUser.userId}"
+                           class="list-group-item list-group-item-action">
+                            <span th:text="${playlist.playlist_name}">Playlist Name</span>
+                            <small class="text-muted d-block" th:text="${'Created: ' + #temporals.format(playlist.creation_date, 'dd-MM-yyyy')}">Creation Date</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/playlists/create" class="btn btn-primary">Create New Playlist</a>
+    </div>
+</div>
+
+</body>
+</html>

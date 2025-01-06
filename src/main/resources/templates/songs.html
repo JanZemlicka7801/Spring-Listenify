@@ -39,6 +39,12 @@
     .rating-container {
       margin-top: 10px;
     }
+
+    .action-buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -47,7 +53,6 @@
 <div class="container mt-5">
   <h2 class="mb-4">Songs</h2>
 
-  <!-- Search form -->
   <form class="mb-4" action="/getSong" method="get">
     <div class="input-group">
       <input type="text" class="form-control" name="title" placeholder="Search for a song by title" required>
@@ -58,24 +63,29 @@
   <div class="row">
     <div class="col-md-6">
       <div class="song-list">
-        <!-- Songs list with rating form -->
         <div th:each="song : ${songs}" class="song-item" onclick="highlightSong(this)">
           <h5 th:text="${song.songTitle}">Song Title</h5>
           <p class="mb-0">Duration: <span th:text="${song.duration}">3:30</span></p>
 
-          <!-- Rating Form -->
-          <form th:action="@{/rateSong}" method="post" class="rating-container">
-            <input type="hidden" name="songId" th:value="${song.songId}" />
-            <label for="rating" class="form-label">Rate this song (1-5):</label>
-            <select id="rating" name="rating" class="form-select form-select-sm" required>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <button type="submit" class="btn btn-sm btn-success mt-2">Submit Rating</button>
-          </form>
+          <div class="action-buttons">
+            <form th:action="@{/rateSong}" method="post" class="rating-container">
+              <input type="hidden" name="songId" th:value="${song.songId}" />
+              <select name="rating" class="form-select form-select-sm d-inline-block w-auto" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <button type="submit" class="btn btn-sm btn-success">Rate</button>
+            </form>
+
+            <button th:if="${session.loggedInUser}"
+                    class="btn btn-sm btn-primary"
+                    th:onclick="'showAddToPlaylistModal(' + ${song.songId} + ')'">
+              Add to Playlist
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -88,6 +98,33 @@
             <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
           </audio>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addToPlaylistModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add to Playlist</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addToPlaylistForm" method="post">
+          <input type="hidden" id="modalSongId" name="songId">
+          <div class="mb-3">
+            <label class="form-label">Select Playlist:</label>
+            <select name="playlistId" class="form-select" required onchange="updateFormAction(this.value)">
+              <option value="">Choose a playlist...</option>
+              <option th:each="playlist : ${userPlaylists}"
+                      th:value="${playlist.playlist_id}"
+                      th:text="${playlist.playlist_name}">
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Song</button>
+        </form>
       </div>
     </div>
   </div>
@@ -107,6 +144,18 @@
       document.getElementById('displayedSongTitle').textContent = songTitle;
     };
   });
+
+  function showAddToPlaylistModal(songId) {
+    document.getElementById('modalSongId').value = songId;
+    const modal = new bootstrap.Modal(document.getElementById('addToPlaylistModal'));
+    modal.show();
+  }
+
+  function updateFormAction(playlistId) {
+    if (playlistId) {
+      document.getElementById('addToPlaylistForm').action = '/playlists/' + playlistId + '/addSong';
+    }
+  }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>

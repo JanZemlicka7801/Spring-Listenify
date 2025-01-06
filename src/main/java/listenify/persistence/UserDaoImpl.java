@@ -66,15 +66,22 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 String computedHash = passwordHash.hashPassword(password, storedSalt);
 
                 if (computedHash.equals(storedHash)) {
+                    LocalDate regDate = rs.getDate("registration_date").toLocalDate();
+                    Date subStartDate = rs.getDate("subscription_start_date");
+                    Date subEndDate = rs.getDate("subscription_end_date");
+
+                    LocalDate startDate = subStartDate != null ? subStartDate.toLocalDate() : regDate;
+                    LocalDate endDate = subEndDate != null ? subEndDate.toLocalDate() : regDate.plusYears(1);
+
                     user = new User(
                             rs.getInt("user_id"),
                             rs.getString("username"),
                             storedHash,
                             storedSalt,
                             rs.getString("email"),
-                            rs.getDate("registration_date").toLocalDate(),
-                            rs.getDate("subscription_start_date").toLocalDate(),
-                            rs.getDate("subscription_end_date").toLocalDate()
+                            regDate,
+                            startDate,
+                            endDate
                     );
                 }
             }
@@ -255,4 +262,42 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (conn != null) conn.close();
         }
     }
+
+    @Override
+    public User getUserById(int userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        User user = null;
+
+        try {
+            conn = getConnection();
+            String query = "SELECT * FROM Users WHERE user_id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("salt"),
+                        rs.getString("email"),
+                        rs.getDate("registration_date").toLocalDate(),
+                        rs.getDate("subscription_start_date").toLocalDate(),
+                        rs.getDate("subscription_end_date").toLocalDate()
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(LocalDate.now() + ": Error getting user by ID: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+        return user;
+    }
+
 }
