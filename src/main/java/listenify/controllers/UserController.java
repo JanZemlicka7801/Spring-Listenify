@@ -134,4 +134,104 @@ public class UserController {
         model.addAttribute("message", "Subscription renewed successfully");
         return "subscriptionSuccess";
     }
+
+
+    @GetMapping("/profile/edit")
+    public String showEditProfile(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "editProfile";
+    }
+
+    @PostMapping("/profile/edit")
+    public String updateProfile(
+            @RequestParam String username,
+            @RequestParam String email,
+            HttpSession session,
+            Model model) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        if (username.isBlank() || email.isBlank()) {
+            model.addAttribute("errMsg", "Username and email cannot be blank");
+            return "error";
+        }
+
+        // Create updated user object
+        User updatedUser = new User(
+                loggedInUser.getUserId(),
+                username,
+                loggedInUser.getPassword(),
+                loggedInUser.getSalt(),
+                email,
+                loggedInUser.getRegistrationDate()
+        );
+
+        UserDao userDao = new UserDaoImpl("database.properties");
+        try {
+            boolean updated = userDao.updateUser(updatedUser);
+            if (updated) {
+                session.setAttribute("loggedInUser", updatedUser);
+                log.info("Profile updated for user {}", username);
+                return "redirect:/profile";
+            } else {
+                model.addAttribute("errMsg", "Failed to update profile");
+                return "error";
+            }
+        } catch (SQLException e) {
+            log.error("Error updating profile for user {}: {}", username, e.getMessage());
+            model.addAttribute("errMsg", "An error occurred while updating profile");
+            return "error";
+        }
+    }
+
+    @GetMapping("/profile/change-password")
+    public String showChangePassword(HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        return "changePassword";
+    }
+
+    @PostMapping("/profile/change-password")
+    public String changePassword(
+            @RequestParam String currentPassword,
+            @RequestParam String newPassword,
+            HttpSession session,
+            Model model) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        UserDao userDao = new UserDaoImpl("database.properties");
+        try {
+            boolean passwordChanged = userDao.updatePassword(
+                    loggedInUser.getUserId(),
+                    currentPassword,
+                    newPassword
+            );
+
+            if (passwordChanged) {
+                log.info("Password changed for user {}", loggedInUser.getUsername());
+                return "redirect:/profile";
+            } else {
+                model.addAttribute("errMsg", "Current password is incorrect");
+                return "error";
+            }
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            log.error("Error changing password for user {}: {}",
+                    loggedInUser.getUsername(), e.getMessage());
+            model.addAttribute("errMsg", "An error occurred while changing password");
+            return "error";
+        }
+    }
 }
