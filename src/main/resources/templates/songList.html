@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Song List</title>
+</head>
+<body>
+<h1>Search Results</h1>
+<ul>
+    <li th:each="song : ${songs}">
+        <span th:text="${song.songTitle}"></span> by <span th:text="${song.artistName}"></span>
+    </li>
+</ul>
+<a href="/searchSong">Back to Search</a>
+</body>
+</html>
