@@ -16,9 +16,17 @@ import java.util.List;
 public class SongController {
 
     @GetMapping("/viewSongs")
-    public String viewSongs(Model model) {
+    public String viewSongs(@RequestParam(name = "title", required = false) String title, Model model) {
         SongDao songDao = new SongDaoImpl("database.properties");
-        List<Song> songs = songDao.getAllSongs();
+        List<Song> songs;
+
+        if (title != null && !title.isBlank()) {
+            songs = songDao.searchSongsByTitle(title);
+            model.addAttribute("searchQuery", title);
+        } else {
+            songs = songDao.getAllSongs();
+        }
+
         model.addAttribute("songs", songs);
         return "songs";
     }

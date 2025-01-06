@@ -43,6 +43,14 @@
 <div class="container mt-5">
   <h2 class="mb-4">Songs</h2>
 
+  <!-- Search form added here -->
+  <form class="mb-4" action="/getSong" method="get">
+    <div class="input-group">
+      <input type="text" class="form-control" name="title" placeholder="Search for a song by title" required>
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
   <div class="row">
     <div class="col-md-6">
       <div class="song-list">
