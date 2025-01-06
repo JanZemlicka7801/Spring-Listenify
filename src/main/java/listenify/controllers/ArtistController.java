@@ -23,7 +23,7 @@ public class ArtistController {
 
     public ArtistController(){
         this.artistDao = new ArtistDaoImpl();
-        this.songDao = new SongDaoImpl();
+        this.songDao = new SongDaoImpl("database.properties");
     }
 
     @GetMapping("/viewArtists")

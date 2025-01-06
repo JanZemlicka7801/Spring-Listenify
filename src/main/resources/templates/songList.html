@@ -4,21 +4,83 @@
     <meta charset="UTF-8">
     <title>Search Results</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <style>
+        .result-list {
+            height: 500px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+        }
+
+        .result-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .result-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .result-item.active {
+            background-color: #e9ecef;
+        }
+
+        .song-detail-container {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/menu :: menu-bar}"></div>
-<h1>Search Results</h1>
 
-<div th:if="${song != null}">
-    <p>Song Title: <span th:text="${song.songTitle}"></span></p>
-    <p>Album ID: <span th:text="${song.albumId}"></span></p>
-    <p>Duration: <span th:text="${song.duration}"></span></p>
+<div class="container mt-5">
+    <h2 class="mb-4">Search Results</h2>
+
+    <form class="mb-4" action="/getSong" method="get">
+        <div class="input-group">
+            <input type="text" class="form-control" name="title" placeholder="Search for a song by title" required>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="result-list">
+                <div th:if="${song != null}" class="result-item active">
+                    <h5 th:text="${song.songTitle}">Song Title</h5>
+                    <p>Album ID: <span th:text="${song.albumId}"></span></p>
+                    <p>Duration: <span th:text="${song.duration}"></span></p>
+                </div>
+
+                <div th:if="${song == null}" class="result-item">
+                    <p>No song found for the given title.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="song-detail-container">
+                <h3 id="displayedSongTitle">Select a song</h3>
+                <div class="player-container">
+                    <audio id="player" controls>
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div th:if="${song == null}">
-    <p>No song found for the given title.</p>
-</div>
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        new Plyr('#player');
+    });
+</script>
 
-<a href="/viewSongs">Back to Search</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
