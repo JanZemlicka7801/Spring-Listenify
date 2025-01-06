@@ -16,9 +16,17 @@
             <p class="card-text">Member since: <span th:text="${#temporals.format(user.registrationDate, 'dd-MM-yyyy')}">01-01-2024</span></p>
 
             <h6 class="mt-4">Subscription Status</h6>
-            <div class="mb-3">
-                <a href="/renewSubscription" class="btn btn-primary">Renew Subscription</a>
-            </div>
+            <p class="card-text">Start Date: <span th:text="${#temporals.format(user.subscriptionStartDate, 'dd-MM-yyyy')}">01-01-2024</span></p>
+            <p class="card-text">End Date: <span th:text="${#temporals.format(user.subscriptionEndDate, 'dd-MM-yyyy')}">01-01-2025</span></p>
+            <p class="card-text" th:if="${user.isSubscriptionExpired()}" style="color: red;">Subscription Expired!</p>
+
+            <form action="/renewSubscription" method="post" class="mb-3">
+                <div class="mb-3">
+                    <label for="creditCard" class="form-label">Credit Card Number</label>
+                    <input type="text" class="form-control" id="creditCard" name="creditCard" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Renew Subscription</button>
+            </form>
 
             <div class="mt-4">
                 <a href="/profile/edit" class="btn btn-primary">Edit Profile</a>
