@@ -35,6 +35,10 @@
     .player-container {
       margin-top: 20px;
     }
+
+    .rating-container {
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -43,7 +47,7 @@
 <div class="container mt-5">
   <h2 class="mb-4">Songs</h2>
 
-  <!-- Search form added here -->
+  <!-- Search form -->
   <form class="mb-4" action="/getSong" method="get">
     <div class="input-group">
       <input type="text" class="form-control" name="title" placeholder="Search for a song by title" required>
@@ -54,9 +58,24 @@
   <div class="row">
     <div class="col-md-6">
       <div class="song-list">
+        <!-- Songs list with rating form -->
         <div th:each="song : ${songs}" class="song-item" onclick="highlightSong(this)">
           <h5 th:text="${song.songTitle}">Song Title</h5>
           <p class="mb-0">Duration: <span th:text="${song.duration}">3:30</span></p>
+
+          <!-- Rating Form -->
+          <form th:action="@{/rateSong}" method="post" class="rating-container">
+            <input type="hidden" name="songId" th:value="${song.songId}" />
+            <label for="rating" class="form-label">Rate this song (1-5):</label>
+            <select id="rating" name="rating" class="form-select form-select-sm" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <button type="submit" class="btn btn-sm btn-success mt-2">Submit Rating</button>
+          </form>
         </div>
       </div>
     </div>

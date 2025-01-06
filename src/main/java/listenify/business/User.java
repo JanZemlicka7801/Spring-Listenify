@@ -28,6 +28,8 @@ public class User {
     private String salt;
     private String email;
     private LocalDate registrationDate;
+    private LocalDate subscriptionStartDate;
+    private LocalDate subscriptionEndDate;
 
     public User(String username, String password, String salt, String email, LocalDate registrationDate) {
         userId = 0;
@@ -36,5 +38,11 @@ public class User {
         this.salt = salt;
         this.email = email;
         this.registrationDate = registrationDate;
+        this.subscriptionStartDate = registrationDate;
+        this.subscriptionEndDate = registrationDate.plusYears(1);
+    }
+
+    public boolean isSubscriptionExpired() {
+        return LocalDate.now().isAfter(subscriptionEndDate);
     }
 }

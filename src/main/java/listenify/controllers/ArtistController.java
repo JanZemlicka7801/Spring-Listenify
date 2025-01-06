@@ -1,6 +1,8 @@
 package listenify.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import listenify.business.Artist;
+import listenify.business.User;
 import listenify.business.Song;
 import listenify.persistence.SongDao;
 import listenify.persistence.SongDaoImpl;
@@ -25,14 +27,24 @@ public class ArtistController {
     }
 
     @GetMapping("/viewArtists")
-    public String processRequest(Model model) {
+    public String processRequest(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         List<Artist> artists = artistDao.getAllArtists();
         model.addAttribute("artists", artists);
         return "artists";
     }
 
     @GetMapping("/searchArtists")
-    public String searchArtists(@RequestParam(name = "artistName") String artistName, Model model) {
+    public String searchArtists(@RequestParam(name = "artistName") String artistName, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
         List<Artist> artists = artistDao.searchArtistsByName(artistName);
         model.addAttribute("artists", artists);
         model.addAttribute("searchQuery", artistName);

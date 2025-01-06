@@ -40,7 +40,8 @@ public class UserController {
         }
 
         UserDao userDao = new UserDaoImpl("database.properties");
-        User user = new User(username, password, "", email, LocalDate.now());
+        LocalDate registrationDate = LocalDate.now();
+        User user = new User(username, password, "", email, registrationDate);
 
         try {
             boolean added = userDao.register(user);
@@ -104,16 +105,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile")
-    public String viewProfile(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("user", loggedInUser);
-        return "profile";
-    }
-
     @PostMapping("/renewSubscription")
     public String renewSubscription(
             @RequestParam(name="creditCard") String creditCard,
@@ -129,12 +120,30 @@ public class UserController {
             return "error";
         }
 
-        // TODO: Implement subscription renewal
-        log.info("Subscription renewed for user {}", loggedInUser.getUsername());
-        model.addAttribute("message", "Subscription renewed successfully");
-        return "subscriptionSuccess";
-    }
+        UserDao userDao = new UserDaoImpl("database.properties");
+        try {
+            LocalDate currentDate = LocalDate.now();
+            boolean renewed = userDao.renewSubscription(loggedInUser.getUserId(), currentDate);
 
+            if (renewed) {
+                User updatedUser = userDao.login(loggedInUser.getUsername(), loggedInUser.getPassword());
+                session.setAttribute("loggedInUser", updatedUser);
+
+                if (loggedInUser.isSubscriptionExpired()) {
+                    model.addAttribute("message", "Your expired subscription has been renewed.");
+                } else {
+                    model.addAttribute("message", "Your subscription has been extended by one year.");
+                }
+                return "subscriptionSuccess";
+            } else {
+                model.addAttribute("errMsg", "Failed to renew subscription");
+                return "error";
+            }
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            model.addAttribute("errMsg", "Database error occurred");
+            return "error";
+        }
+    }
 
     @GetMapping("/profile/edit")
     public String showEditProfile(Model model, HttpSession session) {
@@ -163,14 +172,15 @@ public class UserController {
             return "error";
         }
 
-        // Create updated user object
         User updatedUser = new User(
                 loggedInUser.getUserId(),
                 username,
                 loggedInUser.getPassword(),
                 loggedInUser.getSalt(),
                 email,
-                loggedInUser.getRegistrationDate()
+                loggedInUser.getRegistrationDate(),
+                loggedInUser.getSubscriptionStartDate(),
+                loggedInUser.getSubscriptionEndDate()
         );
 
         UserDao userDao = new UserDaoImpl("database.properties");
@@ -228,8 +238,7 @@ public class UserController {
                 return "error";
             }
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            log.error("Error changing password for user {}: {}",
-                    loggedInUser.getUsername(), e.getMessage());
+            log.error("Error changing password for user {}: {}", loggedInUser.getUsername(), e.getMessage());
             model.addAttribute("errMsg", "An error occurred while changing password");
             return "error";
         }

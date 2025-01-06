@@ -1,4 +1,4 @@
-package config;
+package listenify.config;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -8,7 +8,7 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class PasswordHash {
+public class passwordHash {
     private static final int SALT_LENGTH = 16;
     private static final int HASH_LENGTH = 64;
     private static final int ITERATIONS = 10000;

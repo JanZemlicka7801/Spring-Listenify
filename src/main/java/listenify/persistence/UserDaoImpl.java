@@ -1,7 +1,7 @@
 package listenify.persistence;
 
 import listenify.business.User;
-import config.PasswordHash;
+import listenify.config.passwordHash;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -63,7 +63,7 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (rs.next()) {
                 String storedHash = rs.getString("password");
                 String storedSalt = rs.getString("salt");
-                String computedHash = PasswordHash.hashPassword(password, storedSalt);
+                String computedHash = passwordHash.hashPassword(password, storedSalt);
 
                 if (computedHash.equals(storedHash)) {
                     user = new User(
@@ -72,7 +72,9 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                             storedHash,
                             storedSalt,
                             rs.getString("email"),
-                            rs.getDate("registration_date").toLocalDate()
+                            rs.getDate("registration_date").toLocalDate(),
+                            rs.getDate("subscription_start_date").toLocalDate(),
+                            rs.getDate("subscription_end_date").toLocalDate()
                     );
                 }
             }
@@ -125,8 +127,8 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 return false;
             }
 
-            String salt = PasswordHash.generateSalt();
-            String hashedPassword = PasswordHash.hashPassword(user.getPassword(), salt);
+            String salt = passwordHash.generateSalt();
+            String hashedPassword = passwordHash.hashPassword(user.getPassword(), salt);
 
             String query = "INSERT INTO Users (username, password, salt, email, registration_date) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(query);
@@ -190,14 +192,14 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                 String storedHash = rs.getString("password");
                 String storedSalt = rs.getString("salt");
 
-                String computedHash = PasswordHash.hashPassword(currentPassword, storedSalt);
+                String computedHash = passwordHash.hashPassword(currentPassword, storedSalt);
 
                 if (!computedHash.equals(storedHash)) {
                     return false;
                 }
 
-                String newSalt = PasswordHash.generateSalt();
-                String newHash = PasswordHash.hashPassword(newPassword, newSalt);
+                String newSalt = passwordHash.generateSalt();
+                String newHash = passwordHash.hashPassword(newPassword, newSalt);
 
                 String updateQuery = "UPDATE Users SET password = ?, salt = ? WHERE user_id = ?";
                 updateStmt = conn.prepareStatement(updateQuery);
@@ -212,6 +214,44 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (rs != null) rs.close();
             if (selectStmt != null) selectStmt.close();
             if (updateStmt != null) updateStmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    @Override
+    public boolean renewSubscription(int userId, LocalDate currentDate) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            String selectQuery = "SELECT subscription_end_date FROM Users WHERE user_id = ?";
+            stmt = conn.prepareStatement(selectQuery);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                LocalDate currentEndDate = rs.getDate("subscription_end_date").toLocalDate();
+                LocalDate newEndDate;
+
+                if (currentDate.isAfter(currentEndDate)) {
+                    newEndDate = currentDate.plusYears(1);
+                } else {
+                    newEndDate = currentEndDate.plusYears(1);
+                }
+
+                String updateQuery = "UPDATE Users SET subscription_end_date = ? WHERE user_id = ?";
+                stmt = conn.prepareStatement(updateQuery);
+                stmt.setDate(1, Date.valueOf(newEndDate));
+                stmt.setInt(2, userId);
+
+                return stmt.executeUpdate() > 0;
+            }
+            return false;
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
             if (conn != null) conn.close();
         }
     }
