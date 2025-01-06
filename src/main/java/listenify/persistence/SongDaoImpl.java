@@ -1,5 +1,6 @@
 package listenify.persistence;
 
+import listenify.business.Albums;
 import listenify.business.Song;
 import lombok.extern.slf4j.Slf4j;
 
@@ -180,6 +181,33 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
         } catch (SQLException e) {
             log.error("SQLException occurred when searching songs by title keyword: " + keyword, e);
         }
+        return songs;
+    }
+
+    @Override
+    public List<Song> getAllSongs() {
+        List<Song> songs = new ArrayList<>();
+        String query = "SELECT songs.*, albums.album_title " +
+                "FROM songs " +
+                "JOIN albums ON songs.album_id = albums.album_id";
+
+        try (Connection conn = super.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Song song = new Song(
+                        rs.getInt("song_id"),
+                        rs.getInt("album_id"),
+                        rs.getString("song_title"),
+                        rs.getTime("duration")
+                );
+                songs.add(song);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving songs: " + e.getMessage());
+        }
+
         return songs;
     }
 
