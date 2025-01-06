@@ -5,9 +5,7 @@ import listenify.config.cardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import listenify.business.User;
 import listenify.persistence.UserDao;
 import listenify.persistence.UserDaoImpl;
@@ -17,10 +15,24 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Controller for managing user-related operations such as registration, login, profile updates,
+ * subscription renewal, and password changes in the Listenify application.
+ */
 @Slf4j
 @Controller
 public class UserController {
 
+    /**
+     * Handles user registration.
+     *
+     * @param username   the username entered by the user.
+     * @param password   the password entered by the user.
+     * @param email      the email address entered by the user.
+     * @param creditCard the credit card number provided by the user.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @return the name of the success or error view based on the operation result.
+     */
     @PostMapping("/register")
     public String registerUser(
             @RequestParam(name="username") String username,
@@ -62,6 +74,15 @@ public class UserController {
         }
     }
 
+    /**
+     * Handles user login.
+     *
+     * @param username the username entered by the user.
+     * @param password the password entered by the user.
+     * @param model    the {@link Model} object used to pass data to the view.
+     * @param session  the {@link HttpSession} to store the logged-in user's information.
+     * @return the home page on successful login or an error view if login fails.
+     */
     @PostMapping("/login")
     public String loginUser(
             @RequestParam(name="username") String username,
@@ -95,6 +116,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Logs out the currently logged-in user.
+     *
+     * @param model   the {@link Model} object used to pass data to the view.
+     * @param session the {@link HttpSession} to invalidate the user's session.
+     * @return redirects to the home page after logout.
+     */
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
@@ -105,6 +133,14 @@ public class UserController {
         return "redirect:/";
     }
 
+    /**
+     * Renews the user's subscription.
+     *
+     * @param creditCard the credit card number provided by the user.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return a success view if the subscription is renewed or an error view otherwise.
+     */
     @PostMapping("/renewSubscription")
     public String renewSubscription(
             @RequestParam(name="creditCard") String creditCard,
@@ -145,6 +181,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Displays the form for editing the user's profile.
+     *
+     * @param model   the {@link Model} object used to pass data to the view.
+     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @return the profile edit page or a redirect to the login page if the user is not logged in.
+     */
     @GetMapping("/profile/edit")
     public String showEditProfile(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -155,6 +198,15 @@ public class UserController {
         return "editProfile";
     }
 
+    /**
+     * Updates the user's profile with the new username and email.
+     *
+     * @param username the updated username.
+     * @param email    the updated email address.
+     * @param session  the {@link HttpSession} to retrieve the logged-in user's information.
+     * @param model    the {@link Model} object used to pass data to the view.
+     * @return the profile page if successful or an error view otherwise.
+     */
     @PostMapping("/profile/edit")
     public String updateProfile(
             @RequestParam String username,
@@ -201,6 +253,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Displays the form for changing the user's password.
+     *
+     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @return the change password page or a redirect to the login page if the user is not logged in.
+     */
     @GetMapping("/profile/change-password")
     public String showChangePassword(HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -210,6 +268,15 @@ public class UserController {
         return "changePassword";
     }
 
+    /**
+     * Changes the user's password.
+     *
+     * @param currentPassword the user's current password.
+     * @param newPassword     the new password to set.
+     * @param session         the {@link HttpSession} to check for logged-in user information.
+     * @param model           the {@link Model} object used to pass messages to the view.
+     * @return the profile page if successful or an error view otherwise.
+     */
     @PostMapping("/profile/change-password")
     public String changePassword(
             @RequestParam String currentPassword,

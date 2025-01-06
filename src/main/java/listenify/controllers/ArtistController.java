@@ -15,17 +15,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * Controller for managing artist-related operations in the Listenify application.
+ */
 @Controller
 public class ArtistController {
 
     private final ArtistDao artistDao;
     private final SongDao songDao;
 
+    /**
+     * Initializes the ArtistController with required DAO implementations.
+     */
     public ArtistController() {
         this.artistDao = new ArtistDaoImpl();
         this.songDao = new SongDaoImpl("database.properties");
     }
 
+    /**
+     * Handles the request to view all artists.
+     *
+     * @param model   the {@link Model} object used to pass data to the view.
+     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for displaying artists or redirects to the login page if the user is not logged in.
+     */
     @GetMapping("/viewArtists")
     public String processRequest(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -42,6 +55,14 @@ public class ArtistController {
         return "artists";
     }
 
+    /**
+     * Handles the request to search for artists by name.
+     *
+     * @param artistName the name of the artist to search for.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for displaying the search results or redirects to the login page if the user is not logged in.
+     */
     @GetMapping("/searchArtists")
     public String searchArtists(@RequestParam(name = "artistName") String artistName, Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -58,6 +79,15 @@ public class ArtistController {
         return "artists";
     }
 
+    /**
+     * Handles the request to search for songs by a specific artist.
+     *
+     * @param artistFirstName the first name of the artist (optional).
+     * @param artistLastName  the last name of the artist (required).
+     * @param model           the {@link Model} object used to pass data to the view.
+     * @param session         the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for displaying the artist's songs or redirects to the login page if the user is not logged in.
+     */
     @GetMapping("/searchArtistSongs")
     public String searchArtistSongs(
             @RequestParam(name = "firstName", required = false) String artistFirstName,

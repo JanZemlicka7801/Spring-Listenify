@@ -13,11 +13,23 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Controller for managing playlists in the Listenify application.
+ *
+ * Provides functionality for listing, creating, viewing, and modifying playlists.
+ */
 @Slf4j
 @Controller
 @RequestMapping("/playlists")
 public class PlaylistController {
 
+    /**
+     * Displays the list of playlists for the logged-in user and public playlists.
+     *
+     * @param model   the {@link Model} object used to pass data to the view.
+     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for displaying playlists or redirects to the login page if the user is not logged in.
+     */
     @GetMapping
     public String listPlaylists(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -42,6 +54,12 @@ public class PlaylistController {
         }
     }
 
+    /**
+     * Displays the form to create a new playlist.
+     *
+     * @param session the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for creating playlists or redirects to the login page if the user is not logged in.
+     */
     @GetMapping("/create")
     public String showCreateForm(HttpSession session) {
         if (session.getAttribute("loggedInUser") == null) {
@@ -50,6 +68,15 @@ public class PlaylistController {
         return "createPlaylist";
     }
 
+    /**
+     * Handles the creation of a new playlist.
+     *
+     * @param playlistName the name of the new playlist.
+     * @param isPublic     whether the playlist is public or private.
+     * @param model        the {@link Model} object used to pass data to the view.
+     * @param session      the {@link HttpSession} to check for logged-in user information.
+     * @return redirects to the playlist list page if successful or an error page otherwise.
+     */
     @PostMapping("/create")
     public String createPlaylist(
             @RequestParam("playlistName") String playlistName,
@@ -84,6 +111,14 @@ public class PlaylistController {
         }
     }
 
+    /**
+     * Displays the details of a specific playlist.
+     *
+     * @param playlistId the ID of the playlist to view.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return the name of the Thymeleaf template for viewing playlist details or an error page if access is denied.
+     */
     @GetMapping("/{playlistId}")
     public String viewPlaylist(
             @PathVariable int playlistId,
@@ -134,6 +169,15 @@ public class PlaylistController {
         }
     }
 
+    /**
+     * Adds a song to a playlist.
+     *
+     * @param playlistId the ID of the playlist to which the song will be added.
+     * @param songId     the ID of the song to add.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
+     */
     @PostMapping("/{playlistId}/addSong")
     public String addSongToPlaylist(
             @PathVariable int playlistId,
@@ -168,6 +212,15 @@ public class PlaylistController {
         }
     }
 
+    /**
+     * Removes a song from a playlist.
+     *
+     * @param playlistId the ID of the playlist from which the song will be removed.
+     * @param songId     the ID of the song to remove.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
+     */
     @PostMapping("/{playlistId}/removeSong")
     public String removeSongFromPlaylist(
             @PathVariable int playlistId,
@@ -202,6 +255,15 @@ public class PlaylistController {
         }
     }
 
+    /**
+     * Renames a playlist.
+     *
+     * @param playlistId the ID of the playlist to rename.
+     * @param newName    the new name for the playlist.
+     * @param model      the {@link Model} object used to pass data to the view.
+     * @param session    the {@link HttpSession} to check for logged-in user information.
+     * @return redirects to the playlist details page if successful or an error page if the user is unauthorized or the operation fails.
+     */
     @PostMapping("/{playlistId}/rename")
     public String renamePlaylist(
             @PathVariable int playlistId,
