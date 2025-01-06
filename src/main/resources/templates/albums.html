@@ -35,7 +35,6 @@
           <p class="card-text">
             <span th:text="#{albums.year} + ': ' + ${album.release_year}">Release Year</span>
           </p>
-          <a th:href="@{/albums/{id}(id=${album.album_id})}" class="btn btn-primary" th:text="#{albums.viewSongsButton}">View Songs</a>
         </div>
       </div>
     </div>
