@@ -185,6 +185,70 @@ public class SongDaoImpl extends MySQLDao implements SongDao {
     }
 
     @Override
+    public List<Song> getSongsByArtistName(String artistName) {
+        List<Song> songs = new ArrayList<>();
+        Connection conn = super.getConnection();
+
+        if (conn == null) {
+            System.err.println("Database connection is null. Cannot fetch songs.");
+            return songs;
+        }
+
+        String query = "SELECT s.* FROM songs s " +
+                "JOIN artists a ON s.artist_id = a.artist_id " +
+                "WHERE CONCAT(a.artist_first_name, ' ', a.artist_last_name) LIKE ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + artistName + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                songs.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching songs by artist name: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            super.freeConnection(conn);
+        }
+        return songs;
+    }
+
+    /**
+     * Retrieves a list of songs in a specific album.
+     *
+     * @param albumTitle The title of the album to search for.
+     * @return A list of songs in the specified album.
+     */
+    @Override
+    public List<Song> getSongsByAlbumTitle(String albumTitle) {
+        List<Song> songs = new ArrayList<>();
+        Connection conn = super.getConnection();
+
+        if (conn == null) {
+            System.err.println("Database connection is null. Cannot fetch songs.");
+            return songs;
+        }
+
+        String query = "SELECT s.* FROM songs s " +
+                "JOIN albums a ON s.album_id = a.album_id " +
+                "WHERE a.album_title LIKE ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "%" + albumTitle + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                songs.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching songs by album title: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            super.freeConnection(conn);
+        }
+        return songs;
+    }
+
+    @Override
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
         String query = "SELECT songs.*, albums.album_title " +

@@ -10,4 +10,8 @@ public interface SongDao {
     List<Song> searchSongsByArtist(String artistFirstName, String artistLastName);
     List<Song> getAllSongs();
     List<Song> searchSongsByTitle(String keyword);
+
+    List<Song> getSongsByArtistName(String artistName);
+
+    List<Song> getSongsByAlbumTitle(String albumTitle);
 }
