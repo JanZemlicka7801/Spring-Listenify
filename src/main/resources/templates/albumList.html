@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Album Songs - Listenify</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/menu :: menu-bar}"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4" th:text="'Songs for Album: ' + ${albumTitle}"></h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="song : ${songs}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${song.songTitle}">Song Title</h5>
+                    <p class="card-text">
+                        Duration: <span th:text="${song.duration}">00:00</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
