@@ -104,16 +104,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile")
-    public String viewProfile(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute("loggedInUser");
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("user", loggedInUser);
-        return "profile";
-    }
-
     @PostMapping("/renewSubscription")
     public String renewSubscription(
             @RequestParam(name="creditCard") String creditCard,
