@@ -21,7 +21,7 @@ public class ArtistController {
     private final ArtistDao artistDao;
     private final SongDao songDao;
 
-    public ArtistController(){
+    public ArtistController() {
         this.artistDao = new ArtistDaoImpl();
         this.songDao = new SongDaoImpl("database.properties");
     }
@@ -34,8 +34,12 @@ public class ArtistController {
         }
 
         List<Artist> artists = artistDao.getAllArtists();
-        model.addAttribute("artists", artists);
-        return "artists";
+        if (artists.isEmpty()) {
+            model.addAttribute("errMsg", "No artists found.");
+        } else {
+            model.addAttribute("artists", artists);
+        }
+        return "artists"; // Ensure this template exists
     }
 
     @GetMapping("/searchArtists")
@@ -46,6 +50,9 @@ public class ArtistController {
         }
 
         List<Artist> artists = artistDao.searchArtistsByName(artistName);
+        if (artists.isEmpty()) {
+            model.addAttribute("errMsg", "No artists found for the given name.");
+        }
         model.addAttribute("artists", artists);
         model.addAttribute("searchQuery", artistName);
         return "artists";
@@ -63,8 +70,9 @@ public class ArtistController {
             model.addAttribute("errMsg", "No songs found for the given artist.");
         } else {
             model.addAttribute("songs", songs);
+            model.addAttribute("artistName", artistFirstName != null ? artistFirstName + " " + artistLastName : artistLastName);
         }
 
-        return "artistList";
+        return "artistSongs"; // Updated to use "artistSongs.html"
     }
 }

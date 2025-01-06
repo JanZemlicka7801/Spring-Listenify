@@ -36,7 +36,8 @@
                     </h5>
                     <p class="card-text" th:text="${artist.description}">Artist description</p>
                     <p class="card-text">
-                        <span th:text="${artist.band == 1 ? #{artists.typeBand} : #{artists.typeSolo}}">Artist Type:</span>
+                        <span th:if="${artist.band == 1}" th:text="#{artists.typeBand}"></span>
+                        <span th:if="${artist.band != 1}" th:text="#{artists.typeSolo}"></span>
                     </p>
                 </div>
             </div>

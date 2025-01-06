@@ -27,7 +27,8 @@
                            class="list-group-item list-group-item-action">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span th:text="${playlist.playlist_name}">Playlist Name</span>
-                                <span class="badge bg-secondary" th:text="${playlist.is_public ? #{playlists.public} : #{playlists.private}}">Status</span>
+                                <span class="badge bg-secondary" th:if="${playlist.is_public}" th:text="#{playlists.public}">Public</span>
+                                <span class="badge bg-secondary" th:unless="${playlist.is_public}" th:text="#{playlists.private}">Private</span>
                             </div>
                             <small class="text-muted" th:text="${'#{playlists.created}: ' + #temporals.format(playlist.creation_date, 'dd-MM-yyyy')}">Creation Date</small>
                         </a>
