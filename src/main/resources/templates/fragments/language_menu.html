@@ -1,0 +1,20 @@
+<!-- src/main/resources/templates/fragments/menu.html -->
+<!DOCTYPE html>
+<html lang=en xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Language Menu</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<!-- The next line allows us to include the language menu bar in other thymeleaf template files -->
+<!-- Language Menu Bar -->
+<div th:fragment="language-menu-bar" class="dropdown-container">
+  <form action="/changeLanguage" method="get">
+    <select name="lang" id="lang" onchange="this.form.submit()" class="dropdown">
+      <option th:selected="${#locale.language == 'en'}" th:value="en" th:text="English"></option>
+      <option th:selected="${#locale.language == 'cz'}" th:value="cz" th:text="Česky"></option>
+    </select>
+  </form>
+</div>
+</body>
+</html>
