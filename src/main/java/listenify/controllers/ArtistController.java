@@ -39,7 +39,7 @@ public class ArtistController {
         } else {
             model.addAttribute("artists", artists);
         }
-        return "artists"; // Ensure this template exists
+        return "artists";
     }
 
     @GetMapping("/searchArtists")
@@ -73,6 +73,6 @@ public class ArtistController {
             model.addAttribute("artistName", artistFirstName != null ? artistFirstName + " " + artistLastName : artistLastName);
         }
 
-        return "artistSongs"; // Updated to use "artistSongs.html"
+        return "artistSongs";
     }
 }

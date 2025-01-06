@@ -3,15 +3,12 @@ package listenify.controllers;
 import jakarta.servlet.http.HttpSession;
 import listenify.business.User;
 import listenify.persistence.RatingDaoImpl;
-import listenify.persistence.UserDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 
-import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -61,7 +58,6 @@ public class RatingController {
             HttpSession session,
             Model model) {
 
-        // Check if the user is logged in
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) {
             return "redirect:/login";
@@ -79,7 +75,6 @@ public class RatingController {
             e.printStackTrace();
         }
 
-        // Redirect back to the songs page
         return "redirect:/viewSongs";
     }
 }
