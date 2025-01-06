@@ -47,6 +47,42 @@ public class ArtistDaoImpl extends MySQLDao implements ArtistDao {
         return artists;
     }
 
+    /**
+     * Searches for artists by name.
+     *
+     * @param name the partial or full name of the artist to search for
+     * @return a list of Artist objects matching the search criteria
+     */
+    @Override
+    public List<Artist> searchArtistsByName(String name) {
+        List<Artist> artists = new ArrayList<>();
+        Connection conn = super.getConnection();
+
+        if (conn == null) {
+            System.err.println("Database connection is null. Cannot search artists.");
+            return artists;
+        }
+
+        String query = "SELECT * FROM artists WHERE artist_first_name LIKE ? OR artist_last_name LIKE ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            String searchPattern = "%" + name + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    artists.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error searching artists: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            super.freeConnection(conn);
+        }
+        return artists;
+    }
+
     private Artist mapRow(ResultSet rs) throws SQLException {
         return Artist.builder()
                 .artistId(rs.getInt("artist_id"))
