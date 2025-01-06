@@ -72,7 +72,9 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
                             storedHash,
                             storedSalt,
                             rs.getString("email"),
-                            rs.getDate("registration_date").toLocalDate()
+                            rs.getDate("registration_date").toLocalDate(),
+                            rs.getDate("subscription_start_date").toLocalDate(),
+                            rs.getDate("subscription_end_date").toLocalDate()
                     );
                 }
             }
@@ -212,6 +214,44 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
             if (rs != null) rs.close();
             if (selectStmt != null) selectStmt.close();
             if (updateStmt != null) updateStmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    @Override
+    public boolean renewSubscription(int userId, LocalDate currentDate) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            String selectQuery = "SELECT subscription_end_date FROM Users WHERE user_id = ?";
+            stmt = conn.prepareStatement(selectQuery);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                LocalDate currentEndDate = rs.getDate("subscription_end_date").toLocalDate();
+                LocalDate newEndDate;
+
+                if (currentDate.isAfter(currentEndDate)) {
+                    newEndDate = currentDate.plusYears(1);
+                } else {
+                    newEndDate = currentEndDate.plusYears(1);
+                }
+
+                String updateQuery = "UPDATE Users SET subscription_end_date = ? WHERE user_id = ?";
+                stmt = conn.prepareStatement(updateQuery);
+                stmt.setDate(1, Date.valueOf(newEndDate));
+                stmt.setInt(2, userId);
+
+                return stmt.executeUpdate() > 0;
+            }
+            return false;
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
             if (conn != null) conn.close();
         }
     }
