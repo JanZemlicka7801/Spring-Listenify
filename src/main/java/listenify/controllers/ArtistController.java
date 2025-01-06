@@ -2,8 +2,8 @@ package listenify.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import listenify.business.Artist;
-import listenify.business.User;
 import listenify.business.Song;
+import listenify.business.User;
 import listenify.persistence.SongDao;
 import listenify.persistence.SongDaoImpl;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class ArtistController {
 
     public ArtistController(){
         this.artistDao = new ArtistDaoImpl();
-        this.songDao = new SongDaoImpl("database.properties");
+        this.songDao = new SongDaoImpl();
     }
 
     @GetMapping("/viewArtists")
