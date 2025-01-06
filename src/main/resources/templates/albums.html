@@ -11,6 +11,19 @@
 <div class="container mt-5">
   <h2 class="mb-4">Albums</h2>
 
+  <!-- Search Form -->
+  <form action="/searchAlbum" method="get" class="mb-4">
+    <div class="row">
+      <div class="col-md-10">
+        <input type="text" class="form-control" name="albumTitle" placeholder="Search Songs by Album Title" required>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Albums List -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" th:each="album : ${albums}">
       <div class="card h-100">
