@@ -2,6 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style>
+        .search-container {
+            min-width: 300px;
+        }
+
+        @media (max-width: 992px) {
+            .search-container {
+                margin: 10px 0;
+            }
+        }
+    </style>
 </head>
 <body>
 <div th:fragment="menu-bar">
@@ -11,7 +22,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
@@ -25,6 +35,26 @@
                         <a class="nav-link" href="/viewSongs" th:text="#{menu.songs}"></a>
                     </li>
                 </ul>
+
+
+                <form class="d-flex search-container mx-2" action="/search" method="get">
+                    <div class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               name="query"
+                               placeholder="Search songs, artists, or albums..."
+                               required>
+                        <select class="form-select" name="type" style="max-width: 120px;">
+                            <option value="all">All</option>
+                            <option value="song">Songs</option>
+                            <option value="artist">Artists</option>
+                            <option value="album">Albums</option>
+                        </select>
+                        <button class="btn btn-outline-light" type="submit">
+                            Search
+                        </button>
+                    </div>
+                </form>
 
                 <ul class="navbar-nav">
                     <li class="nav-item" th:if="${session.loggedInUser}">
